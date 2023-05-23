@@ -31,12 +31,3 @@ export const focusedShapeStyles = (theme: Theme) => css`
   box-shadow: inset 5px 5px 10px ${theme.colors.darkShadow},
     inset -5px -5px 10px ${theme.colors.lightShadow};
 `;
-
-export const pageStyles = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  padding: 20px;
-  gap: 20px;
-`;

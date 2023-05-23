@@ -4,8 +4,11 @@ import { IconButton } from "../components/IconButton";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import { css } from "@emotion/react";
 import { ImageFrame } from "../components/Frame";
-import { pageStyles } from "../styles/shape";
+import WebStoriesIcon from "@mui/icons-material/WebStories";
+import PhonelinkRingIcon from "@mui/icons-material/PhonelinkRing";
 import { logoStyles, typoStyles } from "../atomics/typo";
+import { pageStyles } from "../styles/page";
+import { ListItemWithDesc } from "../components/List";
 export const MainPage = (): ReactElement => {
   return (
     <div css={pageStyles}>
@@ -34,6 +37,16 @@ export const MainPage = (): ReactElement => {
         />
       </IconButton>
       <Button>test</Button>
+      <ListItemWithDesc
+        icon={<WebStoriesIcon />}
+        title={"그라운드 만들기"}
+        description="공유를 시작해보세요!"
+      />
+      <ListItemWithDesc
+        icon={<PhonelinkRingIcon />}
+        title={"그라운드 접속하기"}
+        description="기존 공유에 접속하세요!"
+      />
     </div>
   );
 };

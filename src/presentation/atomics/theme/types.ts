@@ -6,5 +6,6 @@ export interface Theme {
     onBackground: string;
     lightShadow: string;
     darkShadow: string;
+    secondary: string;
   };
 }

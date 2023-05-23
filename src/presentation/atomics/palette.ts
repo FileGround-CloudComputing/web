@@ -7,4 +7,5 @@ export const themePalette: Theme["colors"] = {
   onBackground: "#576b6f",
   lightShadow: "#ffffff",
   darkShadow: "#bebebe",
+  secondary: "#646767",
 };

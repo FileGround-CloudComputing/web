@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import { ReactElement, ReactNode, cloneElement } from "react";
-import { normalShapeStyles } from "../styles/shape";
+import { focusedShapeStyles, normalShapeStyles } from "../styles/shape";
 
 interface FrameProps {
   src: string;
@@ -28,5 +28,28 @@ export const ImageFrame = ({ src }: FrameProps): ReactElement => {
         `}
       />
     </div>
+  );
+};
+
+export const IconFrame = ({
+  children,
+}: {
+  children: ReactNode;
+}): ReactElement => {
+  return (
+    <span
+      css={(theme) => css`
+        ${focusedShapeStyles(theme)}
+        border-radius:100%;
+        aspect-ratio: 1;
+        line-height: 0;
+        padding: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      `}
+    >
+      {children}
+    </span>
   );
 };

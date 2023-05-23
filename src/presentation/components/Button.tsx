@@ -5,6 +5,7 @@ import {
   normalShapeStyles,
 } from "../styles/shape";
 import { css } from "@emotion/react";
+import { typoStyles1, typoStyles2 } from "../atomics/typo";
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -15,9 +16,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         css={(theme) => css`
           height: 50px;
-          width: 150px;
+          width: 100%;
           border-radius: 16px;
           color: ${theme.colors.onBackground};
+          ${typoStyles2}
           font-weight: 700;
           cursor: pointer;
           border: none;

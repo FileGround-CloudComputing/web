@@ -10,3 +10,37 @@ export const typoStyles = css`
     "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 `;
+
+export const titleStyles1 = css`
+  ${typoStyles}
+  font-size: 2rem;
+  font-weight: 700;
+`;
+export const titleStyles2 = css`
+  ${typoStyles}
+  font-size: 1.5rem;
+  font-weight: 700;
+`;
+
+export const titleStyles3 = css`
+  ${typoStyles}
+  font-size: 1.25rem;
+  font-weight: 700;
+`;
+
+export const typoStyles1 = css`
+  ${typoStyles}
+  font-size: 1.5rem;
+  font-weight: 400;
+`;
+
+export const typoStyles2 = css`
+  ${typoStyles}
+  font-size: 1.25rem;
+  font-weight: 400;
+`;
+export const typoStyles3 = css`
+  ${typoStyles}
+  font-size: 1rem;
+  font-weight: 400;
+`;
