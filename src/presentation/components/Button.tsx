@@ -4,38 +4,72 @@ import {
   hoverShapeStyles,
   normalShapeStyles,
 } from "../styles/shape";
-import { css } from "@emotion/react";
+import { SerializedStyles, Theme, css } from "@emotion/react";
 import { typoStyles1, typoStyles2 } from "../atomics/typo";
-
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
+import HourglassBottomRoundedIcon from "@mui/icons-material/HourglassBottomRounded";
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  loading?: boolean;
+}
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ ...props }, ref) => {
+  ({ loading = false, ...props }, ref) => {
+    if (loading)
+      return (
+        <button
+          {...props}
+          ref={ref}
+          css={(theme) => css`
+            ${buttonStyles(theme)}
+            cursor: default;
+          `}
+          disabled
+          children={
+            <HourglassBottomRoundedIcon
+              css={css`
+                animation: spin 1s linear infinite;
+                @keyframes spin {
+                  0% {
+                    transform: rotate(0deg);
+                  }
+                  100% {
+                    transform: rotate(360deg);
+                  }
+                }
+              `}
+            />
+          }
+        />
+      );
+
     return (
       <button
         {...props}
         ref={ref}
         css={(theme) => css`
-          ${normalShapeStyles({ theme })}
-          &:hover {
-            ${hoverShapeStyles({ theme })}
-          }
-          &:active {
-            ${focusedShapeStyles({ theme })}
-          }
-          ${typoStyles2}
-          height: 50px;
-          width: 100%;
-          border-radius: 16px;
-          color: ${theme.colors.onBackground};
-          font-weight: 700;
+          ${buttonStyles(theme)}
           cursor: pointer;
-          border: none;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 4px;
         `}
       />
     );
   }
 );
+
+const buttonStyles = (theme: Theme): SerializedStyles => css`
+  ${normalShapeStyles({ theme })}
+  &:hover {
+    ${hoverShapeStyles({ theme })}
+  }
+  &:active {
+    ${focusedShapeStyles({ theme })}
+  }
+  ${typoStyles2}
+  height: 50px;
+  width: 100%;
+  border-radius: 16px;
+  color: ${theme.colors.onBackground};
+  font-weight: 700;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+`;

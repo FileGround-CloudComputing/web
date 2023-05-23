@@ -9,39 +9,14 @@ import PhonelinkRingIcon from "@mui/icons-material/PhonelinkRing";
 import { logoStyles, typoStyles } from "../atomics/typo";
 import { pageStyles } from "../styles/page";
 import { ListButtonWithDesc } from "../patterns/ListButton";
-import GoogleIcon from "@mui/icons-material/Google";
 
 import { Accordion } from "../patterns/Accordion";
 import { List, ListItem } from "../components/List";
+import { MainHeader } from "../patterns/Header";
 export const MainPage = (): ReactElement => {
   return (
     <div css={pageStyles}>
-      <div
-        css={css`
-          display: flex;
-          width: 100%;
-          align-items: center;
-          justify-content: end;
-        `}
-      >
-        <h1
-          css={(theme) => css`
-            ${logoStyles}
-            flex:1;
-            color: ${theme.colors.onBackground};
-          `}
-        >
-          파일그라운드
-        </h1>
-        <Button
-          css={css`
-            width: 100px;
-          `}
-        >
-          <GoogleIcon />
-          로그인
-        </Button>
-      </div>
+      <MainHeader />
       <ImageFrame
         src={
           "https://images.unsplash.com/photo-1634129366530-61d3e56a84fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80"
