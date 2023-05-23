@@ -12,11 +12,12 @@ import ShareRoundedIcon from "@mui/icons-material/ShareRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { PopOver } from "../components/PopOver";
 import { ReactElement } from "react";
+import { Link } from "react-router-dom";
 interface GroundListItemProps {
   ground: Ground;
 }
 
-const GroundListItemMenu = (): ReactElement => {
+const GroundListItemMenu = ({ ground }: GroundListItemProps): ReactElement => {
   return (
     <div
       css={(theme) => css`
@@ -29,7 +30,11 @@ const GroundListItemMenu = (): ReactElement => {
         padding: 6px;
       `}
     >
-      <IconButton>
+      <IconButton
+        onClick={() => {
+          console.log(`${window.location.host}/${ground.key}}`);
+        }}
+      >
         <ShareRoundedIcon />
       </IconButton>
       <IconButton>
@@ -44,57 +49,64 @@ export const GroundListItem = ({ ground }: GroundListItemProps) => {
       css={css`
         display: flex;
         align-items: center;
-        gap: 4px;
+        gap: 8px;
       `}
     >
-      <button
-        css={(theme) => css`
-          border-radius: 16px;
-          padding: 8px 16px;
+      <Link
+        to={`${ground.key}`}
+        css={css`
           flex: 1;
-          border: none;
-          cursor: pointer;
-          cursor: pointer;
-          border: none;
-          ${normalShapeStyles({ theme, size: 2 })}
-          &:hover {
-            ${hoverShapeStyles({ theme, size: 2 })}
-          }
-          &:active {
-            ${focusedShapeStyles({ theme, size: 2 })}
-          }
         `}
       >
-        <div
-          css={css`
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+        <button
+          css={(theme) => css`
+            border-radius: 16px;
+            padding: 8px 16px;
+            width: 100%;
+            border: none;
+            cursor: pointer;
+            cursor: pointer;
+            border: none;
+            ${normalShapeStyles({ theme, size: 3 })}
+            &:hover {
+              ${hoverShapeStyles({ theme, size: 3 })}
+            }
+            &:active {
+              ${focusedShapeStyles({ theme, size: 3 })}
+            }
           `}
         >
-          <span
-            css={(theme) => css`
-              ${titleStyles3}
-              color:${theme.colors.onBackground};
+          <div
+            css={css`
+              display: flex;
+              flex-direction: column;
+              gap: 8px;
             `}
           >
-            {ground.title}
-          </span>
-          <span
-            css={(theme) => css`
-              ${typoStyles3}
-              color:${theme.colors.secondary};
-            `}
-          >
-            {new Date(ground.createdAt).toLocaleString("ko-kr", {
-              dateStyle: "short",
-              timeStyle: "short",
-            })}
-          </span>
-        </div>
-      </button>
+            <span
+              css={(theme) => css`
+                ${titleStyles3}
+                color:${theme.colors.onBackground};
+              `}
+            >
+              {ground.title}
+            </span>
+            <span
+              css={(theme) => css`
+                ${typoStyles3}
+                color:${theme.colors.secondary};
+              `}
+            >
+              {new Date(ground.createdAt).toLocaleString("ko-kr", {
+                dateStyle: "short",
+                timeStyle: "short",
+              })}
+            </span>
+          </div>
+        </button>
+      </Link>
       <PopOver>
-        <GroundListItemMenu />
+        <GroundListItemMenu ground={ground} />
       </PopOver>
     </div>
   );

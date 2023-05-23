@@ -34,7 +34,7 @@ const MainPageGroundsListAccordion = (): ReactElement => {
       off(groundsRef);
     };
   }, [user, getUserGrounds]);
-  if (user == null) return <></>;
+  if (user == null || grounds == null) return <></>;
   return (
     <Accordion>
       <List>

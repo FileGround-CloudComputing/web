@@ -6,5 +6,6 @@ export interface Ground {
   uid: string;
   userDisplayName: string | null;
   userPhotoUrl: string | null;
+  key: number;
   createdAt: number;
 }

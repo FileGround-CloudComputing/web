@@ -28,9 +28,9 @@ export const useGroundRepository = (): GroundRepository => {
   const insertGround = async (title: string): Promise<void> => {
     if (user === null) throw new Error("user is null");
 
-    const count = await get(countRef);
-    set(countRef, count.val() + 1);
-    const groundUserRef = child(groundsRef, `${count.val()}`);
+    const count = (await get(countRef)).val() as number;
+    set(countRef, count + 1);
+    const groundUserRef = child(groundsRef, `${count}`);
     const ground: Ground = {
       title: title,
       photos: [],
@@ -38,6 +38,7 @@ export const useGroundRepository = (): GroundRepository => {
       userDisplayName: user.displayName,
       userPhotoUrl: user.photoURL,
       createdAt: Date.now(),
+      key: count,
     };
     set(groundUserRef, ground);
   };
