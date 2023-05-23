@@ -3,15 +3,14 @@ import { ReactElement, ReactNode, cloneElement } from "react";
 import { focusedShapeStyles, normalShapeStyles } from "../styles/shape";
 
 interface FrameProps {
-  src: string;
+  children: ReactElement;
 }
 
-export const ImageFrame = ({ src }: FrameProps): ReactElement => {
+export const ImageFrame = ({ children }: FrameProps): ReactElement => {
   return (
     <div
       css={(theme) => css`
-        height: 200px;
-        width: 200px;
+        padding: 8px;
         border-radius: 100%;
         ${normalShapeStyles({ theme })}
         display:flex;
@@ -19,14 +18,7 @@ export const ImageFrame = ({ src }: FrameProps): ReactElement => {
         align-items: center;
       `}
     >
-      <img
-        src={src}
-        css={css`
-          width: 185px;
-          height: 185px;
-          border-radius: 100%;
-        `}
-      />
+      {children}
     </div>
   );
 };

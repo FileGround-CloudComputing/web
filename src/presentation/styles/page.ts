@@ -8,5 +8,5 @@ export const pageStyles = css`
   width: 100%;
   max-width: 380px;
   padding: 24px;
-  gap: 48px;
+  gap: 36px;
 `;

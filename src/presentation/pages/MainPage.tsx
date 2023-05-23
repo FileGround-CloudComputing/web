@@ -13,25 +13,13 @@ import { ListButtonWithDesc } from "../patterns/ListButton";
 import { Accordion } from "../patterns/Accordion";
 import { List, ListItem } from "../components/List";
 import { MainHeader } from "../patterns/Header";
+import { UserInfo } from "../patterns/UserInfo";
 export const MainPage = (): ReactElement => {
   return (
     <div css={pageStyles}>
       <MainHeader />
-      <ImageFrame
-        src={
-          "https://images.unsplash.com/photo-1634129366530-61d3e56a84fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80"
-        }
-      />
-      <h3
-        css={(theme) => css`
-          ${typoStyles}
-          font-weight: 900;
-          font-size: 2rem;
-          color: ${theme.colors.onBackground};
-        `}
-      >
-        심규진
-      </h3>
+
+      <UserInfo />
 
       <ListButtonWithDesc
         icon={<WebStoriesIcon />}
