@@ -1,33 +1,41 @@
 import { Theme, css } from "@emotion/react";
 
-export const normalShapeStyles = (theme: Theme) => css`
+interface ShapeStylesProps {
+  theme: Theme;
+  size?: number;
+}
+
+export const normalShapeStyles = ({ theme, size = 5 }: ShapeStylesProps) => css`
   background: ${theme.colors.background};
-  box-shadow: 5px 5px 10px ${theme.colors.darkShadow},
-    -5px -5px 10px ${theme.colors.lightShadow};
+  box-shadow: ${size}px ${size}px ${size * 2}px ${theme.colors.darkShadow},
+    -${size}px -${size}px ${size * 2}px ${theme.colors.lightShadow};
 `;
 
-export const hoverShapeStyles = (theme: Theme) => css`
+export const hoverShapeStyles = ({ theme, size = 5 }: ShapeStylesProps) => css`
   background: linear-gradient(
     145deg,
     ${theme.colors.darkenBackground},
     ${theme.colors.lightenBackground}
   );
-  box-shadow: 5px 5px 10px ${theme.colors.darkShadow},
-    -5px -5px 10px ${theme.colors.lightShadow};
+  box-shadow: ${size}px ${size}px ${size * 2}px ${theme.colors.darkShadow},
+    -${size}px -${size}px ${size * 2}px ${theme.colors.lightShadow};
 `;
 
-export const activeShapeStyles = (theme: Theme) => css`
+export const activeShapeStyles = ({ theme, size = 5 }: ShapeStylesProps) => css`
   background: linear-gradient(
     145deg,
     ${theme.colors.lightenBackground},
     ${theme.colors.darkenBackground}
   );
-  box-shadow: 5px 5px 10px ${theme.colors.darkShadow},
-    -5px -5px 10px ${theme.colors.lightShadow};
+  box-shadow: ${size}px ${size}px ${size * 2}px ${theme.colors.darkShadow},
+    -${size}px -${size}px ${size * 2}px ${theme.colors.lightShadow};
 `;
 
-export const focusedShapeStyles = (theme: Theme) => css`
+export const focusedShapeStyles = ({
+  theme,
+  size = 5,
+}: ShapeStylesProps) => css`
   background: ${theme.colors.background};
-  box-shadow: inset 5px 5px 10px ${theme.colors.darkShadow},
-    inset -5px -5px 10px ${theme.colors.lightShadow};
+  box-shadow: inset ${size}px ${size}px ${size * 2}px ${theme.colors.darkShadow},
+    inset -${size}px -${size}px ${size * 2}px ${theme.colors.lightShadow};
 `;

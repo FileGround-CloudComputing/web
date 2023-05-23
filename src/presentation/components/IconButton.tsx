@@ -21,12 +21,12 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
           font-weight: 700;
           cursor: pointer;
           border: none;
-          ${normalShapeStyles(theme)}
+          ${normalShapeStyles({ theme })}
           &:hover {
-            ${hoverShapeStyles(theme)}
+            ${hoverShapeStyles({ theme })}
           }
           &:active {
-            ${focusedShapeStyles(theme)}
+            ${focusedShapeStyles({ theme })}
           }
         `}
       />

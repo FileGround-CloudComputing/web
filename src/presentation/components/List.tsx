@@ -1,69 +1,55 @@
 import { css } from "@emotion/react";
-import { ButtonHTMLAttributes, ReactElement, forwardRef } from "react";
-import { titleStyles2, typoStyles2, typoStyles3 } from "../atomics/typo";
+import { HTMLAttributes, ReactNode } from "react";
+import { transitionStyles } from "../styles/transition";
 import {
   normalShapeStyles,
   hoverShapeStyles,
   focusedShapeStyles,
 } from "../styles/shape";
-import { IconFrame } from "./Frame";
+import { typoStyles2 } from "../atomics/typo";
 
-interface ListProps
-  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children"> {
-  title: string;
-  description: string;
-  icon: ReactElement;
+interface ListProps {
+  children: ReactNode;
 }
-export const ListItemWithDesc = forwardRef<HTMLButtonElement, ListProps>(
-  ({ title, description, icon, ...props }, ref) => {
-    return (
-      <button
-        {...props}
-        ref={ref}
-        css={(theme) => css`
-          padding: 16px;
-          width: 100%;
-          border-radius: 16px;
-          color: ${theme.colors.onBackground};
-          ${titleStyles2}
-          cursor: pointer;
-          border: none;
-          ${normalShapeStyles(theme)}
-          &:hover {
-            ${hoverShapeStyles(theme)}
-          }
-          &:active {
-            ${focusedShapeStyles(theme)}
-          }
-          display: flex;
-          flex-direction: row;
-          justify-content: start;
-          align-items: center;
-          gap: 16px;
-        `}
-      >
-        <IconFrame>{icon}</IconFrame>
-        <div
-          css={css`
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: start;
-          `}
-        >
-          <span>{title}</span>
-          <span
-            css={(theme) =>
-              css`
-                ${typoStyles3}
-                color:${theme.colors.secondary};
-              `
-            }
-          >
-            {description}
-          </span>
-        </div>
-      </button>
-    );
-  }
-);
+export const List = ({ children }: ListProps) => {
+  return (
+    <div
+      css={(theme) => css`
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        border-radius: 16px;
+        padding: 16px;
+        ${focusedShapeStyles({ theme, size: 3 })}
+      `}
+    >
+      {children}
+    </div>
+  );
+};
+
+type ListItemProps = HTMLAttributes<HTMLButtonElement>;
+export const ListItem = ({ ...props }: ListItemProps) => {
+  return (
+    <button
+      {...props}
+      css={(theme) => css`
+        border-radius: 16px;
+        padding: 16px;
+        border: none;
+        cursor: pointer;
+        cursor: pointer;
+        border: none;
+        ${typoStyles2}
+        ${normalShapeStyles({ theme, size: 2 })}
+        &:hover {
+          ${hoverShapeStyles({ theme, size: 2 })}
+        }
+        &:active {
+          ${focusedShapeStyles({ theme, size: 2 })}
+        }
+      `}
+    />
+  );
+};

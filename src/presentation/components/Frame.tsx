@@ -13,7 +13,7 @@ export const ImageFrame = ({ src }: FrameProps): ReactElement => {
         height: 200px;
         width: 200px;
         border-radius: 100%;
-        ${normalShapeStyles(theme)}
+        ${normalShapeStyles({ theme })}
         display:flex;
         justify-content: center;
         align-items: center;
@@ -39,7 +39,7 @@ export const IconFrame = ({
   return (
     <span
       css={(theme) => css`
-        ${focusedShapeStyles(theme)}
+        ${focusedShapeStyles({ theme })}
         border-radius:100%;
         aspect-ratio: 1;
         line-height: 0;

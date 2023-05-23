@@ -6,7 +6,7 @@ export const pageStyles = css`
   align-items: center;
   margin: 0 auto;
   width: 100%;
-  max-width: 360px;
-  padding: 20px;
-  gap: 20px;
+  max-width: 380px;
+  padding: 24px;
+  gap: 48px;
 `;

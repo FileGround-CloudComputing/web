@@ -15,21 +15,25 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
         ref={ref}
         css={(theme) => css`
+          ${normalShapeStyles({ theme })}
+          &:hover {
+            ${hoverShapeStyles({ theme })}
+          }
+          &:active {
+            ${focusedShapeStyles({ theme })}
+          }
+          ${typoStyles2}
           height: 50px;
           width: 100%;
           border-radius: 16px;
           color: ${theme.colors.onBackground};
-          ${typoStyles2}
           font-weight: 700;
           cursor: pointer;
           border: none;
-          ${normalShapeStyles(theme)}
-          &:hover {
-            ${hoverShapeStyles(theme)}
-          }
-          &:active {
-            ${focusedShapeStyles(theme)}
-          }
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 4px;
         `}
       />
     );
