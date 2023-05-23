@@ -1,12 +1,15 @@
 import { css } from "@emotion/react";
 import { HTMLAttributes, ReactNode } from "react";
 import { transitionStyles } from "../styles/transition";
+
 import {
   normalShapeStyles,
   hoverShapeStyles,
   focusedShapeStyles,
 } from "../styles/shape";
-import { typoStyles2 } from "../atomics/typo";
+import { titleStyles3, typoStyles2, typoStyles3 } from "../atomics/typo";
+import { Ground } from "@/domain/ground";
+import { IconButton } from "./IconButton";
 
 interface ListProps {
   children: ReactNode;
@@ -30,6 +33,7 @@ export const List = ({ children }: ListProps) => {
 };
 
 type ListItemProps = HTMLAttributes<HTMLButtonElement>;
+
 export const ListItem = ({ ...props }: ListItemProps) => {
   return (
     <button

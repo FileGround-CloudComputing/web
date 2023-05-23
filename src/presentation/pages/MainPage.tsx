@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { Button } from "../components/Button";
 import { IconButton } from "../components/IconButton";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
@@ -11,10 +11,42 @@ import { pageStyles } from "../styles/page";
 import { ListButtonWithDesc } from "../patterns/ListButton";
 
 import { Accordion } from "../patterns/Accordion";
-import { List, ListItem } from "../components/List";
+import { List } from "../components/List";
 import { MainHeader } from "../patterns/Header";
 import { UserInfo } from "../patterns/UserInfo";
+import { useUserStore } from "@/data/userRepository";
+import { useGroundRepository } from "@/data/groundRepository";
+import { off, onValue } from "firebase/database";
+import { Ground } from "@/domain/ground";
+import { GroundListItem } from "../patterns/GroundList";
+
+const MainPageGroundsListAccordion = (): ReactElement => {
+  const { user } = useUserStore();
+  const { getUserGrounds } = useGroundRepository();
+  const [grounds, setGrounds] = useState<Ground[]>([]);
+  useEffect(() => {
+    if (user == null) return;
+    const groundsRef = getUserGrounds();
+    onValue(groundsRef, (snapshot) => {
+      setGrounds(snapshot.val());
+    });
+    return () => {
+      off(groundsRef);
+    };
+  }, [user, getUserGrounds]);
+  if (user == null) return <></>;
+  return (
+    <Accordion>
+      <List>
+        {grounds.map((ground) => (
+          <GroundListItem key={ground.createdAt} ground={ground} />
+        ))}
+      </List>
+    </Accordion>
+  );
+};
 export const MainPage = (): ReactElement => {
+  const { insertGround } = useGroundRepository();
   return (
     <div css={pageStyles}>
       <MainHeader />
@@ -31,13 +63,14 @@ export const MainPage = (): ReactElement => {
         title={"그라운드 접속하기"}
         description="기존 공유에 접속하세요!"
       />
-      <Accordion>
-        <List>
-          <ListItem>대충 내용</ListItem>
-          <ListItem>대충 내용</ListItem>
-          <ListItem>대충 내용</ListItem>
-        </List>
-      </Accordion>
+      <MainPageGroundsListAccordion />
+      <button
+        onClick={() => {
+          insertGround("test");
+        }}
+      >
+        test
+      </button>
     </div>
   );
 };

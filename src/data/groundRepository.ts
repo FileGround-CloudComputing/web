@@ -1,23 +1,45 @@
-import { DatabaseReference, child, push, ref } from "firebase/database";
+import {
+  DatabaseReference,
+  child,
+  equalTo,
+  get,
+  orderByChild,
+  query,
+  ref,
+  set,
+} from "firebase/database";
 import { database } from "./firebase";
 import { useUserStore } from "./userRepository";
+import { Ground } from "@/domain/ground";
 interface GroundRepository {
-  getUserGrounds: () => void;
-  insertGround: () => void;
+  getUserGrounds: () => DatabaseReference;
+  insertGround: (title: string) => Promise<void>;
 }
 
 export const useGroundRepository = (): GroundRepository => {
-  const groundRef = ref(database, "grounds");
+  const groundsRef = ref(database, "grounds");
+  const countRef = ref(database, "count");
   const { user } = useUserStore();
-  const getUserGrounds = async (): Promise<DatabaseReference> => {
+  const getUserGrounds = (): DatabaseReference => {
     if (user === null) throw new Error("user is null");
-    return await child(groundRef, user.uid);
+    return query(groundsRef, equalTo(user.uid)).ref;
   };
 
-  const insertGround = async (): Promise<void> => {
+  const insertGround = async (title: string): Promise<void> => {
     if (user === null) throw new Error("user is null");
-    const groundUserRef = await child(groundRef, user.uid);
-    push(groundUserRef, { name: "test" });
+
+    const count = await get(countRef);
+    set(countRef, count.val() + 1);
+    const groundUserRef = child(groundsRef, `${count.val()}`);
+    const ground: Ground = {
+      title: title,
+      photos: [],
+      uid: user.uid,
+      userDisplayName: user.displayName,
+      userPhotoUrl: user.photoURL,
+      createdAt: Date.now(),
+    };
+    set(groundUserRef, ground);
   };
 
   return { getUserGrounds, insertGround };

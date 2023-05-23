@@ -3,6 +3,7 @@ import { ReactNode, useState } from "react";
 import { IconButton } from "../components/IconButton";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import { transitionStyles } from "../styles/transition";
+import { MotionDiv } from "../components/Motion";
 interface AccordionProps {
   children: ReactNode;
 }
@@ -32,18 +33,17 @@ export const Accordion = ({ children }: AccordionProps) => {
           `}
         />
       </IconButton>
-
-      <div
-        css={css`
-          opacity: ${isOpen ? "100%" : "0%"};
-
-          ${transitionStyles};
-          transition-property: opacity;
-          width: 100%;
-        `}
-      >
-        {children}
-      </div>
+      {isOpen && (
+        <MotionDiv
+          css={css`
+            ${transitionStyles};
+            transition-property: opacity;
+            width: 100%;
+          `}
+        >
+          {children}
+        </MotionDiv>
+      )}
     </div>
   );
 };
