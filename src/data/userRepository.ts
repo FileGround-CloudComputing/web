@@ -27,7 +27,7 @@ interface UserRepository {
   signOut: () => void;
 }
 
-export const useUserRepository = () => {
+export const useUserRepository = (): UserRepository => {
   const signIn = () => {
     signInWithRedirect(auth, provider);
   };

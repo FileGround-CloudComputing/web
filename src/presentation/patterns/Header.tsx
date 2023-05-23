@@ -3,7 +3,7 @@ import { ReactElement } from "react";
 import { logoStyles } from "../atomics/typo";
 import { Button } from "../components/Button";
 import GoogleIcon from "@mui/icons-material/Google";
-import { useUserRepository, useUserStore } from "@/data/user";
+import { useUserRepository, useUserStore } from "@/data/userRepository";
 
 export const MainHeader = (): ReactElement => {
   const { signIn, signOut } = useUserRepository();

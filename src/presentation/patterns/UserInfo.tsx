@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import { ReactElement } from "react";
 import { typoStyles } from "../atomics/typo";
-import { useUserStore } from "@/data/user";
+import { useUserStore } from "@/data/userRepository";
 import { ImageFrame } from "../components/Frame";
 
 export const UserInfo = (): ReactElement => {
