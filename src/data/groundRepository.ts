@@ -14,6 +14,7 @@ import { Ground } from "@/domain/ground";
 interface GroundRepository {
   getUserGrounds: () => DatabaseReference;
   insertGround: (title: string) => Promise<void>;
+  deleteGround: (key: number) => Promise<void>;
 }
 
 export const useGroundRepository = (): GroundRepository => {
@@ -25,6 +26,12 @@ export const useGroundRepository = (): GroundRepository => {
     return query(groundsRef, equalTo(user.uid)).ref;
   };
 
+  const deleteGround = async (key: number): Promise<void> => {
+    if (user === null) throw new Error("user is null");
+    const groundRef = child(groundsRef, `${key}`);
+    await set(groundRef, null);
+    return;
+  };
   const insertGround = async (title: string): Promise<void> => {
     if (user === null) throw new Error("user is null");
 
@@ -43,5 +50,5 @@ export const useGroundRepository = (): GroundRepository => {
     set(groundUserRef, ground);
   };
 
-  return { getUserGrounds, insertGround };
+  return { getUserGrounds, insertGround, deleteGround };
 };

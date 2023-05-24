@@ -6,7 +6,7 @@ import { css } from "@emotion/react";
 import { ImageFrame } from "../components/Frame";
 import WebStoriesIcon from "@mui/icons-material/WebStories";
 import PhonelinkRingIcon from "@mui/icons-material/PhonelinkRing";
-import { logoStyles, typoStyles } from "../atomics/typo";
+import { logoStyles, titleStyles2, typoStyles } from "../atomics/typo";
 import { pageStyles } from "../styles/page";
 import { ListButtonWithDesc } from "../patterns/ListButton";
 
@@ -38,6 +38,15 @@ const MainPageGroundsListAccordion = (): ReactElement => {
   return (
     <Accordion>
       <List>
+        <h3
+          css={(theme) => css`
+            text-align: center;
+            ${titleStyles2}
+            color:${theme.colors.onBackground};
+          `}
+        >
+          그라운드 목록
+        </h3>
         {grounds.map((ground) => (
           <GroundListItem key={ground.createdAt} ground={ground} />
         ))}
@@ -69,7 +78,7 @@ export const MainPage = (): ReactElement => {
           insertGround("test");
         }}
       >
-        test
+        그라운드 생성하기
       </button>
     </div>
   );

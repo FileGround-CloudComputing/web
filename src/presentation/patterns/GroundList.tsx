@@ -13,11 +13,13 @@ import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { PopOver } from "../components/PopOver";
 import { ReactElement } from "react";
 import { Link } from "react-router-dom";
+import { useGroundRepository } from "@/data/groundRepository";
 interface GroundListItemProps {
   ground: Ground;
 }
 
 const GroundListItemMenu = ({ ground }: GroundListItemProps): ReactElement => {
+  const { deleteGround } = useGroundRepository();
   return (
     <div
       css={(theme) => css`
@@ -37,7 +39,13 @@ const GroundListItemMenu = ({ ground }: GroundListItemProps): ReactElement => {
       >
         <ShareRoundedIcon />
       </IconButton>
-      <IconButton>
+      <IconButton
+        onClick={() => {
+          if (confirm("정말로 삭제하시겠습니까?")) {
+            deleteGround(ground.key);
+          }
+        }}
+      >
         <DeleteRoundedIcon />
       </IconButton>
     </div>
