@@ -130,7 +130,9 @@ export const GlobalStyles = (): ReactElement => {
           border-collapse: collapse;
           border-spacing: 0;
         }
-
+        a {
+          text-decoration: none;
+        }
         @import url("https://cdnjs.cloudflare.com/ajax/libs/pretendard/1.3.6/static/pretendard.css");
       `}
     />

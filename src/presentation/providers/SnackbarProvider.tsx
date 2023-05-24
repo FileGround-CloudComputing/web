@@ -1,6 +1,6 @@
 import { useSnackbarStore } from "@/data/snackbarStore";
 import { ReactElement, useEffect, useState } from "react";
-import { BottomSnackbar } from "../components/SnackBar";
+import { BottomSnackbar } from "../commons/components/SnackBar";
 
 export const SnackBarProvider = (): ReactElement => {
   const { snackbar, timeout, setSnackbarTimeout } = useSnackbarStore();

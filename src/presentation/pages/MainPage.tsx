@@ -1,29 +1,31 @@
 import { ReactElement, useEffect, useState } from "react";
-import { Button } from "../components/Button";
-import { IconButton } from "../components/IconButton";
+import { Button } from "../commons/components/Button";
+import { IconButton } from "../commons/components/IconButton";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import { css } from "@emotion/react";
-import { ImageFrame } from "../components/Frame";
+import { ImageFrame } from "../commons/components/Frame";
 import WebStoriesIcon from "@mui/icons-material/WebStories";
 import PhonelinkRingIcon from "@mui/icons-material/PhonelinkRing";
-import { logoStyles, titleStyles2, typoStyles } from "../atomics/typo";
-import { pageStyles } from "../atomics/styles/page";
-import { ListButtonWithDesc } from "../patterns/ListButton";
+import { logoStyles, titleStyles2, typoStyles } from "../commons/atomics/typo";
+import { pageStyles } from "../commons/atomics/styles/page";
+import { ListButtonWithDesc } from "../commons/patterns/ListButton";
 
-import { Accordion } from "../patterns/Accordion";
-import { List } from "../components/List";
-import { MainHeader } from "../patterns/Header";
-import { UserInfo } from "../patterns/UserInfo";
+import { Accordion } from "../commons/patterns/Accordion";
+import { List } from "../commons/components/List";
+import { MainHeader } from "../commons/patterns/Header";
+import { UserInfo } from "../commons/patterns/UserInfo";
 import { useUserStore } from "@/data/userRepository";
 import { useGroundRepository } from "@/data/groundRepository";
 import { off, onValue } from "firebase/database";
 import { Ground } from "@/domain/ground";
-import { GroundListItem } from "../patterns/GroundList";
+import { GroundListItem } from "../commons/patterns/GroundList";
+import { Link } from "react-router-dom";
+import { CONNECT_PATH } from "@/domain/paths";
 
 const MainPageGroundsListAccordion = (): ReactElement => {
   const { user } = useUserStore();
   const { getUserGrounds } = useGroundRepository();
-  const [grounds, setGrounds] = useState<Ground[]>([]);
+  const [grounds, setGrounds] = useState<object>({});
   useEffect(() => {
     if (user == null) return;
     const groundsRef = getUserGrounds();
@@ -47,9 +49,10 @@ const MainPageGroundsListAccordion = (): ReactElement => {
         >
           그라운드 목록
         </h3>
-        {grounds.map((ground) => (
-          <GroundListItem key={ground.createdAt} ground={ground} />
-        ))}
+        {grounds != null &&
+          Object.values(grounds).map((ground) => (
+            <GroundListItem key={ground.createdAt} ground={ground} />
+          ))}
       </List>
     </Accordion>
   );
@@ -67,11 +70,18 @@ export const MainPage = (): ReactElement => {
         title={"그라운드 만들기"}
         description="공유를 시작해보세요!"
       />
-      <ListButtonWithDesc
-        icon={<PhonelinkRingIcon />}
-        title={"그라운드 접속하기"}
-        description="기존 공유에 접속하세요!"
-      />
+      <Link
+        to={CONNECT_PATH}
+        css={css`
+          width: 100%;
+        `}
+      >
+        <ListButtonWithDesc
+          icon={<PhonelinkRingIcon />}
+          title={"그라운드 접속하기"}
+          description="기존 공유에 접속하세요!"
+        />
+      </Link>
       <MainPageGroundsListAccordion />
       <button
         onClick={() => {
