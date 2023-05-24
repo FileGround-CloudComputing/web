@@ -54,7 +54,11 @@ export const GroundShare = ({ url }: GroundQRProps): ReactElement => {
           {url}
         </span>
 
-        <IconButton>
+        <IconButton
+          onClick={() => {
+            window.navigator.clipboard.writeText(url);
+          }}
+        >
           <ContentCopyRoundedIcon />
         </IconButton>
       </div>

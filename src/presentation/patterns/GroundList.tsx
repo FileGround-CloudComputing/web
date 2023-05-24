@@ -32,7 +32,7 @@ const GroundListItemMenu = ({ ground }: GroundListItemProps): ReactElement => {
             setOpen(false);
           }}
         >
-          <GroundShare url={`${window.location.host}/${ground.key}`} />
+          <GroundShare url={`${window.location.href}${ground.key}`} />
         </Modal>
       )}
       <div
