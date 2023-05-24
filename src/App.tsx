@@ -5,6 +5,7 @@ import { CacheProvider, ThemeProvider, css } from "@emotion/react";
 import { theme } from "@/presentation/atomics/theme/theme";
 import { GlobalStyles } from "./presentation/atomics/theme/GlobalStyles";
 import createCache from "@emotion/cache";
+import { SnackBarProvider } from "./presentation/providers/SnackbarProvider";
 const myCache = createCache({
   key: "css",
   prepend: true,
@@ -24,6 +25,7 @@ export const App = (): ReactElement => {
         >
           <RouterProvider router={router} />
         </div>
+        <SnackBarProvider />
       </CacheProvider>
     </ThemeProvider>
   );
