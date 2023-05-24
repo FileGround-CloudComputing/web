@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import { useGroundRepository } from "@/data/groundRepository";
 import { Modal } from "./Modal";
 import { GroundShare } from "./GroundShare";
+import { useSnackbarStore } from "@/data/snackbarStore";
 interface GroundListItemProps {
   ground: Ground;
 }
@@ -23,6 +24,7 @@ interface GroundListItemProps {
 const GroundListItemMenu = ({ ground }: GroundListItemProps): ReactElement => {
   const { deleteGround } = useGroundRepository();
   const [open, setOpen] = useState(false);
+  const { addSnackbar } = useSnackbarStore();
   return (
     <>
       {open && (
@@ -49,7 +51,6 @@ const GroundListItemMenu = ({ ground }: GroundListItemProps): ReactElement => {
         <IconButton
           onClick={() => {
             setOpen(true);
-            console.log(`${window.location.host}/${ground.key}}`);
           }}
         >
           <ShareRoundedIcon />
@@ -57,7 +58,19 @@ const GroundListItemMenu = ({ ground }: GroundListItemProps): ReactElement => {
         <IconButton
           onClick={() => {
             if (confirm("정말로 삭제하시겠습니까?")) {
-              deleteGround(ground.key);
+              deleteGround(ground.key)
+                .then(() => {
+                  addSnackbar({
+                    message: "성공적으로 삭제했습니다.",
+                    type: "success",
+                  });
+                })
+                .catch((e) => {
+                  addSnackbar({
+                    message: "erorr",
+                    type: "error",
+                  });
+                });
             }
           }}
         >
