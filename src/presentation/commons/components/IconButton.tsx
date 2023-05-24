@@ -6,9 +6,11 @@ import {
 } from "../atomics/styles/shape";
 import { css } from "@emotion/react";
 
-type IconButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
+interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  shadowSize?: number;
+}
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ ...props }, ref) => {
+  ({ shadowSize, ...props }, ref) => {
     return (
       <button
         {...props}
@@ -19,14 +21,17 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
           border-radius: 100%;
           color: ${theme.colors.onBackground};
           font-weight: 700;
+          display: flex;
+          justify-content: center;
+          align-items: center;
           cursor: pointer;
           border: none;
-          ${normalShapeStyles({ theme })}
+          ${normalShapeStyles({ theme, size: shadowSize })}
           &:hover {
-            ${hoverShapeStyles({ theme })}
+            ${hoverShapeStyles({ theme, size: shadowSize })}
           }
           &:active {
-            ${focusedShapeStyles({ theme })}
+            ${focusedShapeStyles({ theme, size: shadowSize })}
           }
         `}
       />
