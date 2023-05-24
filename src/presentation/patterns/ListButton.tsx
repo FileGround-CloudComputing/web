@@ -5,7 +5,7 @@ import {
   normalShapeStyles,
   hoverShapeStyles,
   focusedShapeStyles,
-} from "../styles/shape";
+} from "../atomics/styles/shape";
 import { IconFrame } from "../components/Frame";
 
 interface ListButtonProps

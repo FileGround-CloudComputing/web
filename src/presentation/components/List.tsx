@@ -1,12 +1,12 @@
 import { css } from "@emotion/react";
 import { HTMLAttributes, ReactNode } from "react";
-import { transitionStyles } from "../styles/transition";
+import { transitionStyles } from "../atomics/styles/transition";
 
 import {
   normalShapeStyles,
   hoverShapeStyles,
   focusedShapeStyles,
-} from "../styles/shape";
+} from "../atomics/styles/shape";
 import { titleStyles3, typoStyles2, typoStyles3 } from "../atomics/typo";
 import { Ground } from "@/domain/ground";
 import { IconButton } from "./IconButton";

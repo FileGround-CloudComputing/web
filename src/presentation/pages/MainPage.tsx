@@ -7,7 +7,7 @@ import { ImageFrame } from "../components/Frame";
 import WebStoriesIcon from "@mui/icons-material/WebStories";
 import PhonelinkRingIcon from "@mui/icons-material/PhonelinkRing";
 import { logoStyles, titleStyles2, typoStyles } from "../atomics/typo";
-import { pageStyles } from "../styles/page";
+import { pageStyles } from "../atomics/styles/page";
 import { ListButtonWithDesc } from "../patterns/ListButton";
 
 import { Accordion } from "../patterns/Accordion";

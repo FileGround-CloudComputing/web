@@ -3,7 +3,7 @@ import {
   focusedShapeStyles,
   hoverShapeStyles,
   normalShapeStyles,
-} from "../styles/shape";
+} from "../atomics/styles/shape";
 import { css } from "@emotion/react";
 
 type IconButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;

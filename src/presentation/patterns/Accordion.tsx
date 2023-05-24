@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 import { ReactNode, useState } from "react";
 import { IconButton } from "../components/IconButton";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
-import { transitionStyles } from "../styles/transition";
+import { transitionStyles } from "../atomics/styles/transition";
 import { MotionDiv } from "../components/Motion";
 interface AccordionProps {
   children: ReactNode;

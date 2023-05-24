@@ -6,49 +6,65 @@ import {
   normalShapeStyles,
   hoverShapeStyles,
   focusedShapeStyles,
-} from "../styles/shape";
+} from "../atomics/styles/shape";
 import ShareRoundedIcon from "@mui/icons-material/ShareRounded";
 
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { PopOver } from "../components/PopOver";
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGroundRepository } from "@/data/groundRepository";
+import { Modal } from "./Modal";
+import { GroundShare } from "./GroundShare";
 interface GroundListItemProps {
   ground: Ground;
 }
 
 const GroundListItemMenu = ({ ground }: GroundListItemProps): ReactElement => {
   const { deleteGround } = useGroundRepository();
+  const [open, setOpen] = useState(false);
   return (
-    <div
-      css={(theme) => css`
-        display: flex;
-        flex-direction: row;
-        justify-content: end;
-        gap: 4px;
-        background-color: ${theme.colors.darkenBackground};
-        border-radius: 16px;
-        padding: 6px;
-      `}
-    >
-      <IconButton
-        onClick={() => {
-          console.log(`${window.location.host}/${ground.key}}`);
-        }}
+    <>
+      {open && (
+        <Modal
+          title={"그라운드 공유하기"}
+          handleClose={() => {
+            setOpen(false);
+          }}
+        >
+          <GroundShare url={`${window.location.host}/${ground.key}`} />
+        </Modal>
+      )}
+      <div
+        css={(theme) => css`
+          display: flex;
+          flex-direction: row;
+          justify-content: end;
+          gap: 4px;
+          background-color: ${theme.colors.darkenBackground};
+          border-radius: 16px;
+          padding: 6px;
+        `}
       >
-        <ShareRoundedIcon />
-      </IconButton>
-      <IconButton
-        onClick={() => {
-          if (confirm("정말로 삭제하시겠습니까?")) {
-            deleteGround(ground.key);
-          }
-        }}
-      >
-        <DeleteRoundedIcon />
-      </IconButton>
-    </div>
+        <IconButton
+          onClick={() => {
+            setOpen(true);
+            console.log(`${window.location.host}/${ground.key}}`);
+          }}
+        >
+          <ShareRoundedIcon />
+        </IconButton>
+        <IconButton
+          onClick={() => {
+            if (confirm("정말로 삭제하시겠습니까?")) {
+              deleteGround(ground.key);
+            }
+          }}
+        >
+          <DeleteRoundedIcon />
+        </IconButton>
+      </div>
+    </>
   );
 };
 export const GroundListItem = ({ ground }: GroundListItemProps) => {

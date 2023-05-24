@@ -3,7 +3,7 @@ import {
   focusedShapeStyles,
   hoverShapeStyles,
   normalShapeStyles,
-} from "../styles/shape";
+} from "../atomics/styles/shape";
 import { SerializedStyles, Theme, css } from "@emotion/react";
 import { typoStyles1, typoStyles2 } from "../atomics/typo";
 import HourglassBottomRoundedIcon from "@mui/icons-material/HourglassBottomRounded";
