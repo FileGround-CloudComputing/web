@@ -8,4 +8,8 @@ export const themePalette: Theme["colors"] = {
   lightShadow: "#ffffff",
   darkShadow: "#bebebe",
   secondary: "#646767",
+  success: "#4caf50",
+  error: "#f44336",
+  warning: "#ff9800",
+  info: "#2196f3",
 };

@@ -7,5 +7,9 @@ export interface Theme {
     lightShadow: string;
     darkShadow: string;
     secondary: string;
+    success: string;
+    error: string;
+    warning: string;
+    info: string;
   };
 }

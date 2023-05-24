@@ -1,22 +1,28 @@
 import { useSnackbarStore } from "@/data/snackbarStore";
-import { css } from "@emotion/react";
 import { ReactElement, useEffect, useState } from "react";
+import { BottomSnackbar } from "../components/SnackBar";
 
 export const SnackBarProvider = (): ReactElement => {
-  const { snackbar } = useSnackbarStore();
+  const { snackbar, timeout, setSnackbarTimeout } = useSnackbarStore();
   const [open, isOpen] = useState(false);
-  const timeout: number | null = null;
+
+  const handleClose = () => {
+    isOpen(false);
+  };
   useEffect(() => {
     if (timeout != null) {
       clearTimeout(timeout);
+      setSnackbarTimeout(null);
     }
-    setTimeout(() => {
-      isOpen(false);
-    }, 10000);
-  }, [snackbar]);
-
+    isOpen(true);
+    setSnackbarTimeout(
+      setTimeout(() => {
+        handleClose();
+      }, 10000)
+    );
+  }, [snackbar, setSnackbarTimeout]);
   if (!open || snackbar == null) {
     return <></>;
   }
-  return <div>{snackbar.message}</div>;
+  return <BottomSnackbar snackbar={snackbar} handleClose={handleClose} />;
 };

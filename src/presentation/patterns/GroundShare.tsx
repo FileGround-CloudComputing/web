@@ -5,11 +5,13 @@ import { normalShapeStyles } from "../atomics/styles/shape";
 import { IconButton } from "../components/IconButton";
 import ContentCopyRoundedIcon from "@mui/icons-material/ContentCopyRounded";
 import { typoStyles2, typoStyles3 } from "../atomics/typo";
+import { useSnackbarStore } from "@/data/snackbarStore";
 interface GroundQRProps {
   url: string;
 }
 // TODO share로 바꾸기
 export const GroundShare = ({ url }: GroundQRProps): ReactElement => {
+  const { addSnackbar } = useSnackbarStore();
   const theme = useTheme();
   return (
     <div
@@ -57,6 +59,10 @@ export const GroundShare = ({ url }: GroundQRProps): ReactElement => {
         <IconButton
           onClick={() => {
             window.navigator.clipboard.writeText(url);
+            addSnackbar({
+              message: "클립보드에 복사되었습니다.",
+              type: "success",
+            });
           }}
         >
           <ContentCopyRoundedIcon />
