@@ -1,5 +1,6 @@
 import {
   DatabaseReference,
+  Query,
   child,
   equalTo,
   get,
@@ -19,7 +20,7 @@ import { useUserStore } from "./userRepository";
 import { Ground } from "@/domain/ground";
 import { Photo } from "@/domain/photo";
 interface GroundRepository {
-  getUserGrounds: () => DatabaseReference;
+  getUserGrounds: () => Query;
   insertGround: (title: string) => Promise<void>;
   deleteGround: (key: string) => Promise<void>;
   getGroundById: (key: string) => DatabaseReference;
@@ -56,10 +57,10 @@ export const useGroundRepository = (): GroundRepository => {
     });
     await Promise.all(promises);
   };
-  const getUserGrounds = (): DatabaseReference => {
-    const groundsRef = ref(database, "grounds");
+  const getUserGrounds = (): Query => {
     if (user === null) throw new Error("user is null");
-    return query(groundsRef, orderByChild("uid"), equalTo(user.uid)).ref;
+    const groundsRef = ref(database, "grounds");
+    return query(groundsRef, orderByChild("uid"), equalTo(user.uid));
   };
 
   const getPhotoUrl = async (path: string): Promise<string> => {
