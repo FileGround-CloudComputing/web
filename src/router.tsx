@@ -2,6 +2,10 @@ import { createBrowserRouter } from "react-router-dom";
 import { MainPage } from "./presentation/pages/MainPage";
 import { CONNECT_PATH, MAIN_PATH } from "./domain/paths";
 import { ConnectPage } from "./presentation/connectPage/ConnectPage";
+import {
+  GroundPage,
+  GroundPageEnter,
+} from "./presentation/groundPage/groundPage";
 
 export const router = createBrowserRouter([
   {
@@ -9,4 +13,8 @@ export const router = createBrowserRouter([
     element: <MainPage />,
   },
   { path: CONNECT_PATH, element: <ConnectPage /> },
+  {
+    path: ":groundId",
+    element: <GroundPageEnter />,
+  },
 ]);

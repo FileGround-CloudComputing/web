@@ -4,36 +4,69 @@ import {
   equalTo,
   get,
   orderByChild,
+  push,
   query,
   ref,
   set,
 } from "firebase/database";
-import { database } from "./firebase";
+import {
+  getDownloadURL,
+  ref as storageRef,
+  uploadBytes,
+} from "firebase/storage";
+import { database, storage } from "./firebase";
 import { useUserStore } from "./userRepository";
 import { Ground } from "@/domain/ground";
+import { Photo } from "@/domain/photo";
 interface GroundRepository {
   getUserGrounds: () => DatabaseReference;
   insertGround: (title: string) => Promise<void>;
   deleteGround: (key: string) => Promise<void>;
   getGroundById: (key: string) => DatabaseReference;
+  uploadPhotos: (photos: File[], ground: Ground) => Promise<void>;
+  getPhotoUrl: (path: string) => Promise<string>;
 }
 
 export const useGroundRepository = (): GroundRepository => {
   const groundsRef = ref(database, "grounds");
   const countRef = ref(database, "count");
-  const { user } = useUserStore();
+  const groundsStorageRef = storageRef(storage, "grounds");
+  const { user, init } = useUserStore();
+
+  const uploadPhotos = async (
+    photos: File[],
+    ground: Ground
+  ): Promise<void> => {
+    if (user === null) throw new Error("user is null");
+    const promises = photos.map(async (photo) => {
+      const photoRef = storageRef(
+        groundsStorageRef,
+        `${ground.key}/${photo.name}`
+      );
+      const uploadedPhoto = await uploadBytes(photoRef, photo);
+      const ref = uploadedPhoto.ref;
+      push(child(groundsRef, `${ground.key}/photos`), {
+        src: ref.fullPath,
+      } as Photo);
+      return uploadedPhoto.ref.fullPath;
+    });
+    await Promise.all(promises);
+  };
   const getUserGrounds = (): DatabaseReference => {
     if (user === null) throw new Error("user is null");
     return query(groundsRef, equalTo(user.uid)).ref;
   };
 
+  const getPhotoUrl = async (path: string): Promise<string> => {
+    return await getDownloadURL(storageRef(storage, path));
+  };
   const getGroundById = (key: string): DatabaseReference => {
-    if (user === null) throw new Error("user is null");
+    if (user === null && init) throw new Error("user is null");
     return child(groundsRef, `${Number.parseInt(key)}`);
   };
 
   const deleteGround = async (key: string): Promise<void> => {
-    if (user === null) throw new Error("user is null");
+    if (user === null && init) throw new Error("user is null");
     const groundRef = child(groundsRef, `${Number.parseInt(key)}`);
     await set(groundRef, null);
     return;
@@ -56,5 +89,12 @@ export const useGroundRepository = (): GroundRepository => {
     set(groundUserRef, ground);
   };
 
-  return { getUserGrounds, insertGround, deleteGround, getGroundById };
+  return {
+    getUserGrounds,
+    insertGround,
+    deleteGround,
+    getGroundById,
+    uploadPhotos,
+    getPhotoUrl,
+  };
 };

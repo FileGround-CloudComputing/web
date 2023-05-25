@@ -63,7 +63,7 @@ export const ConnectPage = (): ReactElement => {
   const [value, setValue] = useState("");
   const { addSnackbar } = useSnackbarStore();
   const navigate = useNavigate();
-  const { mutate, data, isLoading } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: async () => {
       if (value.length < 6) {
         return;

@@ -3,6 +3,7 @@ import { getAnalytics } from "firebase/analytics";
 import { GoogleAuthProvider } from "firebase/auth";
 import { getAuth } from "firebase/auth";
 import { getDatabase } from "firebase/database";
+import { getStorage } from "firebase/storage";
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FB_API_KEY,
   authDomain: import.meta.env.VITE_FB_AUTH_DOMAIN,
@@ -20,3 +21,4 @@ const analytics = getAnalytics(app);
 export const provider = new GoogleAuthProvider();
 export const auth = getAuth();
 export const database = getDatabase(app);
+export const storage = getStorage(app);
