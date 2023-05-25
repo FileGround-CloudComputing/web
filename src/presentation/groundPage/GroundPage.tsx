@@ -1,6 +1,6 @@
 import { useGroundRepository } from "@/data/groundRepository";
 import { useSnackbarStore } from "@/data/snackbarStore";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { CONNECT_PATH } from "@/domain/paths";
 import { off, onValue } from "firebase/database";
@@ -10,6 +10,9 @@ import { pageStyles } from "../commons/atomics/styles/page";
 import { Photo } from "@/domain/photo";
 import { GroundMenu } from "./patterns/GroundMenu";
 import { PhotoListByUser } from "./patterns/PhotoList";
+import { css } from "@emotion/react";
+import { titleStyles1 } from "../commons/atomics/typo";
+import { Button } from "../commons/components/Button";
 
 export const GroundPageEnter = (): ReactElement => {
   const { groundId } = useParams();
@@ -60,6 +63,7 @@ export const GroundPage = ({ groundId }: GroundPageProps): ReactElement => {
       off(dbRef);
     };
   }, []);
+  const ref = useRef<HTMLInputElement>(null);
   if (ground == null) {
     return <></>;
   }
@@ -67,9 +71,22 @@ export const GroundPage = ({ groundId }: GroundPageProps): ReactElement => {
     <>
       <Header actions={[<GroundMenu key={1} ground={ground} />]} />
       <div css={[pageStyles]}>
-        <span>{ground.title}</span>
+        <span
+          css={(theme) => css`
+            ${titleStyles1}
+            color: ${theme.colors.onBackground};
+          `}
+        >
+          {ground.title}
+        </span>
         {ground.photos != null && <PhotoListByUser photos={ground.photos} />}
-
+        <Button
+          onClick={() => {
+            ref.current?.click();
+          }}
+        >
+          업로드하기
+        </Button>
         <input
           type="file"
           accept="image/*"
@@ -78,6 +95,8 @@ export const GroundPage = ({ groundId }: GroundPageProps): ReactElement => {
             if (e.currentTarget.files == null) return;
             uploadPhotos([...e.currentTarget.files], ground);
           }}
+          ref={ref}
+          hidden
         />
       </div>
     </>
