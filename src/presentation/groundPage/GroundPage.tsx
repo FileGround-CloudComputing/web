@@ -10,6 +10,9 @@ import { pageStyles } from "../commons/atomics/styles/page";
 import { GroundImg } from "../commons/components/GroundImg";
 import { css } from "@emotion/react";
 import { normalShapeStyles } from "../commons/atomics/styles/shape";
+import { Photo } from "@/domain/photo";
+import { Img } from "../commons/components/Img";
+import { GroundMenu } from "./patterns/GroundMenu";
 
 export const GroundPageEnter = (): ReactElement => {
   const { groundId } = useParams();
@@ -25,21 +28,35 @@ interface GroundPageProps {
   groundId: string;
 }
 export const GroundPage = ({ groundId }: GroundPageProps): ReactElement => {
-  const { getGroundById, uploadPhotos } = useGroundRepository();
+  const { getGroundById, uploadPhotos, getPhotoUrl } = useGroundRepository();
   const { addSnackbar } = useSnackbarStore();
   const [ground, setGround] = useState<Ground | null>(null);
   useEffect(() => {
     const dbRef = getGroundById(groundId);
-    onValue(dbRef, (snap) => {
+    onValue(dbRef, async (snap) => {
       const val = snap.val();
-      const data: Ground = {
-        ...val,
-        photos: val.photos == null ? null : Object.values(val.photos),
-      };
-      if (data == null) {
+
+      if (val == null) {
         addSnackbar({ message: "Ground not found", type: "error" });
         return;
       }
+      if (val.photos == null) {
+        setGround(val);
+        return;
+      }
+      const photos = await Promise.all(
+        Object.values(val.photos as Photo[]).map(async (photo: Photo) => {
+          const src = await getPhotoUrl(photo.src);
+          return {
+            ...photo,
+            src: src,
+          };
+        })
+      );
+      const data: Ground = {
+        ...val,
+        photos: photos,
+      };
       setGround(data);
     });
     return () => {
@@ -51,7 +68,7 @@ export const GroundPage = ({ groundId }: GroundPageProps): ReactElement => {
   }
   return (
     <>
-      <Header actions={[]} />
+      <Header actions={[<GroundMenu ground={ground} />]} />
       <div css={[pageStyles]}>
         <span>{ground.title}</span>
         <div
@@ -64,8 +81,8 @@ export const GroundPage = ({ groundId }: GroundPageProps): ReactElement => {
         >
           {ground.photos != null &&
             ground.photos.map((photo) => (
-              <GroundImg
-                path={photo.src}
+              <Img
+                src={photo.src}
                 css={(theme) => css`
                   width: 100%;
                   object-fit: cover;

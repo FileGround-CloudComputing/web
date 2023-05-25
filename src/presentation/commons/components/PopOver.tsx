@@ -5,6 +5,7 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { css } from "@emotion/react";
 import OutsideClickHandler from "react-outside-click-handler";
 import { MotionDiv } from "./Motion";
+import { normalShapeStyles } from "../atomics/styles/shape";
 
 interface PopOverProps {
   children: ReactNode;
@@ -41,10 +42,13 @@ export const PopOver = ({ children }: PopOverProps): ReactElement => {
         {isOpen && (
           <MotionDiv
             css={(theme) => css`
-              background-color: ${theme.colors.background};
+              background-color: ${theme.colors.darkShadow};
+              border-radius: 8px;
+              ${normalShapeStyles({ theme, size: 2 })}
               z-index: 10;
-              top: -52px;
+              bottom: -56px;
               right: 0px;
+              padding: 8px;
               position: absolute;
             `}
           >

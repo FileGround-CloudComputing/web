@@ -45,9 +45,14 @@ export const useGroundRepository = (): GroundRepository => {
       );
       const uploadedPhoto = await uploadBytes(photoRef, photo);
       const ref = uploadedPhoto.ref;
-      push(child(groundsRef, `${ground.key}/photos`), {
+      const photoDto: Photo = {
+        uid: user.uid,
+        userDisplayName: user.displayName,
+        userPhotoUrl: user.photoURL,
         src: ref.fullPath,
-      } as Photo);
+        thumbnail: ref.fullPath,
+      };
+      push(child(groundsRef, `${ground.key}/photos`), photoDto);
       return uploadedPhoto.ref.fullPath;
     });
     await Promise.all(promises);
