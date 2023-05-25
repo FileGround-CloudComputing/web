@@ -2,10 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { MainPage } from "./presentation/pages/MainPage";
 import { CONNECT_PATH, MAIN_PATH } from "./domain/paths";
 import { ConnectPage } from "./presentation/connectPage/ConnectPage";
-import {
-  GroundPage,
-  GroundPageEnter,
-} from "./presentation/groundPage/groundPage";
+import { GroundPageEnter } from "./presentation/groundPage/GroundPage";
 
 export const router = createBrowserRouter([
   {

@@ -1,8 +1,5 @@
-import { storage } from "@/data/firebase";
 import { useGroundRepository } from "@/data/groundRepository";
-import { getDownloadURL } from "firebase/storage";
 import { ReactElement, useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "./Skeleton";
 interface GroundImgProps {
   path: string;

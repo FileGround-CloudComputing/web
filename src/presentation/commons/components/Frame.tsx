@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { ReactElement, ReactNode, cloneElement } from "react";
+import { ReactElement, ReactNode } from "react";
 import { focusedShapeStyles, normalShapeStyles } from "../atomics/styles/shape";
 
 interface FrameProps {

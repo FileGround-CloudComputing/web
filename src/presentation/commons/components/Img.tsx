@@ -1,7 +1,7 @@
 import { ImgHTMLAttributes, ReactElement, useState } from "react";
 
 interface ImgProps extends ImgHTMLAttributes<HTMLImageElement> {
-  src?: string;
+  src: string | undefined;
 }
 export const Img = ({ src, ...props }: ImgProps): ReactElement => {
   const [localSrc, setLocalSrc] = useState<string | undefined>(src);

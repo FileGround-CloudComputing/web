@@ -58,14 +58,14 @@ const GroundListItemMenu = ({ ground }: GroundListItemProps): ReactElement => {
         <IconButton
           onClick={() => {
             if (confirm("정말로 삭제하시겠습니까?")) {
-              deleteGround(ground.key)
+              deleteGround(ground.key.toString())
                 .then(() => {
                   addSnackbar({
                     message: "성공적으로 삭제했습니다.",
                     type: "success",
                   });
                 })
-                .catch((e) => {
+                .catch(() => {
                   addSnackbar({
                     message: "erorr",
                     type: "error",

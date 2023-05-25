@@ -1,10 +1,6 @@
 import { css } from "@emotion/react";
 import { ReactNode } from "react";
-import {
-  normalShapeStyles,
-  hoverShapeStyles,
-  focusedShapeStyles,
-} from "../atomics/styles/shape";
+import { normalShapeStyles, focusedShapeStyles } from "../atomics/styles/shape";
 import { typoStyles2 } from "../atomics/typo";
 
 interface NumIndicatorProps {

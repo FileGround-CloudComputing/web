@@ -8,7 +8,7 @@ interface SnackbarState {
   setSnackbarTimeout: (timeout: number | null) => void;
 }
 
-export const useSnackbarStore = create<SnackbarState>()((set, get) => ({
+export const useSnackbarStore = create<SnackbarState>()((set) => ({
   snackbar: null,
   timeout: null,
   addSnackbar: (snackbar: Snackbar) => {

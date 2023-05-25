@@ -1,7 +1,4 @@
-import {
-  titleStyles1,
-  titleStyles2,
-} from "@/presentation/commons/atomics/typo";
+import { titleStyles1 } from "@/presentation/commons/atomics/typo";
 import { IconButton } from "@/presentation/commons/components/IconButton";
 import { css } from "@emotion/react";
 import { ReactElement } from "react";

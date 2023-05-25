@@ -3,24 +3,18 @@ import { ReactElement, useEffect, useState } from "react";
 import { BottomSnackbar } from "../commons/components/SnackBar";
 
 export const SnackBarProvider = (): ReactElement => {
-  const { snackbar, timeout, setSnackbarTimeout } = useSnackbarStore();
+  const { snackbar } = useSnackbarStore();
   const [open, isOpen] = useState(false);
 
   const handleClose = () => {
     isOpen(false);
   };
   useEffect(() => {
-    if (timeout != null) {
-      clearTimeout(timeout);
-      setSnackbarTimeout(null);
-    }
     isOpen(true);
-    setSnackbarTimeout(
-      setTimeout(() => {
-        handleClose();
-      }, 10000)
-    );
-  }, [snackbar, setSnackbarTimeout]);
+    setTimeout(() => {
+      handleClose();
+    }, 10000);
+  }, [snackbar]);
   if (!open || snackbar == null) {
     return <></>;
   }

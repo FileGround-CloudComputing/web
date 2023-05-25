@@ -1,11 +1,11 @@
-import { ButtonHTMLAttributes, HTMLProps, forwardRef } from "react";
+import { ButtonHTMLAttributes, forwardRef } from "react";
 import {
   focusedShapeStyles,
   hoverShapeStyles,
   normalShapeStyles,
 } from "../atomics/styles/shape";
 import { SerializedStyles, Theme, css } from "@emotion/react";
-import { typoStyles1, typoStyles2 } from "../atomics/typo";
+import { typoStyles2 } from "../atomics/typo";
 import HourglassBottomRoundedIcon from "@mui/icons-material/HourglassBottomRounded";
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean;

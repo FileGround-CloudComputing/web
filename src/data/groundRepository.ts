@@ -3,7 +3,6 @@ import {
   child,
   equalTo,
   get,
-  orderByChild,
   push,
   query,
   ref,

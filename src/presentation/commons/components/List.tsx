@@ -1,15 +1,12 @@
 import { css } from "@emotion/react";
 import { HTMLAttributes, ReactNode } from "react";
-import { transitionStyles } from "../atomics/styles/transition";
 
 import {
   normalShapeStyles,
   hoverShapeStyles,
   focusedShapeStyles,
 } from "../atomics/styles/shape";
-import { titleStyles3, typoStyles2, typoStyles3 } from "../atomics/typo";
-import { Ground } from "@/domain/ground";
-import { IconButton } from "./IconButton";
+import { typoStyles2 } from "../atomics/typo";
 
 interface ListProps {
   children: ReactNode;

@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { ReactElement, ReactNode, useCallback, useRef, useState } from "react";
+import { ReactElement, ReactNode, useCallback, useState } from "react";
 import Marquee from "react-fast-marquee";
 interface FlowContainerProps {
   children: ReactNode;

@@ -1,12 +1,8 @@
 import { ReactElement, useEffect, useState } from "react";
-import { Button } from "../commons/components/Button";
-import { IconButton } from "../commons/components/IconButton";
-import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import { css } from "@emotion/react";
-import { ImageFrame } from "../commons/components/Frame";
 import WebStoriesIcon from "@mui/icons-material/WebStories";
 import PhonelinkRingIcon from "@mui/icons-material/PhonelinkRing";
-import { logoStyles, titleStyles2, typoStyles } from "../commons/atomics/typo";
+import { titleStyles2 } from "../commons/atomics/typo";
 import { pageStyles } from "../commons/atomics/styles/page";
 import { ListButtonWithDesc } from "../commons/patterns/ListButton";
 
@@ -17,7 +13,6 @@ import { UserInfo } from "../commons/patterns/UserInfo";
 import { useUserStore } from "@/data/userRepository";
 import { useGroundRepository } from "@/data/groundRepository";
 import { off, onValue } from "firebase/database";
-import { Ground } from "@/domain/ground";
 import { GroundListItem } from "../commons/patterns/GroundList";
 import { Link } from "react-router-dom";
 import { CONNECT_PATH } from "@/domain/paths";

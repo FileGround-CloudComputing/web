@@ -4,7 +4,7 @@ import QRCode from "react-qr-code";
 import { normalShapeStyles } from "../atomics/styles/shape";
 import { IconButton } from "../components/IconButton";
 import ContentCopyRoundedIcon from "@mui/icons-material/ContentCopyRounded";
-import { typoStyles2, typoStyles3 } from "../atomics/typo";
+import { typoStyles3 } from "../atomics/typo";
 import { useSnackbarStore } from "@/data/snackbarStore";
 interface GroundQRProps {
   url: string;

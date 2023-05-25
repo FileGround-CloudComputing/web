@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import { ButtonHTMLAttributes, ReactElement, forwardRef } from "react";
-import { titleStyles2, typoStyles2, typoStyles3 } from "../atomics/typo";
+import { titleStyles2, typoStyles3 } from "../atomics/typo";
 import {
   normalShapeStyles,
   hoverShapeStyles,

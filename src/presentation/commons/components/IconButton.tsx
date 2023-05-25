@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, HTMLProps, forwardRef } from "react";
+import { ButtonHTMLAttributes, forwardRef } from "react";
 import {
   focusedShapeStyles,
   hoverShapeStyles,

@@ -2,7 +2,6 @@ import { Snackbar } from "@/domain/snackbar";
 import { css } from "@emotion/react";
 import { ReactElement } from "react";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import { IconButton } from "./IconButton";
 import { theme } from "../atomics/theme/theme";
 interface SnackBarProps {
   snackbar: Snackbar;

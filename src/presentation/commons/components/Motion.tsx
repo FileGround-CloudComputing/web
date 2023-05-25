@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { HTMLProps, ReactNode } from "react";
+import { ReactNode } from "react";
 interface MotionDivProps {
   className?: string;
   children: ReactNode;
