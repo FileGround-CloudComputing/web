@@ -3,7 +3,6 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { ReactElement } from "react";
 import { Photo } from "@/domain/photo";
-import { normalShapeStyles } from "@/presentation/commons/atomics/styles/shape";
 import { Img } from "@/presentation/commons/components/Img";
 import { css } from "@emotion/react";
 import { Pagination } from "swiper";

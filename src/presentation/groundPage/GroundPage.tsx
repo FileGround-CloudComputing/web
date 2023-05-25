@@ -65,7 +65,7 @@ export const GroundPage = ({ groundId }: GroundPageProps): ReactElement => {
   }
   return (
     <>
-      <Header actions={[<GroundMenu key={1} />]} />
+      <Header actions={[<GroundMenu key={1} ground={ground} />]} />
       <div css={[pageStyles]}>
         <span>{ground.title}</span>
         {ground.photos != null && <PhotoListByUser photos={ground.photos} />}
