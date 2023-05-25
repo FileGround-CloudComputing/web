@@ -5,7 +5,7 @@ import { titleStyles2 } from "../atomics/typo";
 interface ModalProps {
   children: ReactNode;
   className?: string;
-  title: string;
+  title?: string;
   handleClose: () => void;
 }
 export const Modal = ({
@@ -21,6 +21,7 @@ export const Modal = ({
         position: fixed;
         width: 100vw;
         height: 100vh;
+        z-index: 20;
         background-color: rgba(0, 0, 0, 0.5);
         left: 0;
         top: 0;
@@ -47,15 +48,17 @@ export const Modal = ({
           gap: 24px;
         `}
       >
-        <p
-          css={(theme) => css`
-            ${titleStyles2}
-            color:${theme.colors.onBackground};
-            text-align: center;
-          `}
-        >
-          {title}
-        </p>
+        {title && (
+          <p
+            css={(theme) => css`
+              ${titleStyles2}
+              color:${theme.colors.onBackground};
+              text-align: center;
+            `}
+          >
+            {title}
+          </p>
+        )}
         {children}
       </div>
     </div>
