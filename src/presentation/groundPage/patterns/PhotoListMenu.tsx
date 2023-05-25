@@ -10,17 +10,19 @@ export const PhotoListMenu = ({ photos }: PhotoListMenuProps): ReactElement => {
     <IconButton
       shadowSize={2}
       onClick={() => {
-        photos.forEach((photo, i) => {
-          setTimeout(() => {
-            if (photo.blob == null) return;
-            const link = document.createElement("a");
-            link.href = URL.createObjectURL(photo.blob);
-            link.download = photo.src;
-            link.click();
-            link.remove();
-          }),
-            i * 100;
-        });
+        if (confirm("정말로 다운로드 하시겠습니까?")) {
+          photos.forEach((photo, i) => {
+            setTimeout(() => {
+              if (photo.blob == null) return;
+              const link = document.createElement("a");
+              link.href = URL.createObjectURL(photo.blob);
+              link.download = photo.src;
+              link.click();
+              link.remove();
+            }),
+              i * 100;
+          });
+        }
       }}
     >
       <FileDownloadRoundedIcon />
