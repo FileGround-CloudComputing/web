@@ -5,6 +5,7 @@ import { ReactElement } from "react";
 import { Photo } from "@/domain/photo";
 import { Img } from "@/presentation/commons/components/Img";
 import { css } from "@emotion/react";
+// @ts-ignore
 import { Pagination } from "swiper";
 interface PhotoSwiperProps {
   photos: Photo[];
