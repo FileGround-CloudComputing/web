@@ -9,22 +9,18 @@ import {
 } from "../atomics/styles/shape";
 import ShareRoundedIcon from "@mui/icons-material/ShareRounded";
 
-import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { PopOver } from "../components/PopOver";
 import { ReactElement, useState } from "react";
 import { Link } from "react-router-dom";
-import { useGroundRepository } from "@/data/groundRepository";
 import { Modal } from "./Modal";
 import { GroundShare } from "./GroundShare";
-import { useSnackbarStore } from "@/data/snackbarStore";
+import { DeleteGroundIconButton } from "./DeleteIconButton";
 interface GroundListItemProps {
   ground: Ground;
 }
 
 const GroundListItemMenu = ({ ground }: GroundListItemProps): ReactElement => {
-  const { deleteGround } = useGroundRepository();
   const [open, setOpen] = useState(false);
-  const { addSnackbar } = useSnackbarStore();
   return (
     <>
       {open && (
@@ -34,7 +30,7 @@ const GroundListItemMenu = ({ ground }: GroundListItemProps): ReactElement => {
             setOpen(false);
           }}
         >
-          <GroundShare url={`${window.location.href}${ground.key}`} />
+          <GroundShare url={`${window.location.href}${ground.id}`} />
         </Modal>
       )}
       <div
@@ -55,27 +51,7 @@ const GroundListItemMenu = ({ ground }: GroundListItemProps): ReactElement => {
         >
           <ShareRoundedIcon />
         </IconButton>
-        <IconButton
-          onClick={() => {
-            if (confirm("정말로 삭제하시겠습니까?")) {
-              deleteGround(ground.key.toString())
-                .then(() => {
-                  addSnackbar({
-                    message: "성공적으로 삭제했습니다.",
-                    type: "success",
-                  });
-                })
-                .catch(() => {
-                  addSnackbar({
-                    message: "erorr",
-                    type: "error",
-                  });
-                });
-            }
-          }}
-        >
-          <DeleteRoundedIcon />
-        </IconButton>
+        <DeleteGroundIconButton ground={ground} shadowSize={2} />
       </div>
     </>
   );
@@ -90,7 +66,7 @@ export const GroundListItem = ({ ground }: GroundListItemProps) => {
       `}
     >
       <Link
-        to={`${ground.key}`}
+        to={`${ground.id}`}
         css={css`
           flex: 1;
         `}

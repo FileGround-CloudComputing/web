@@ -5,12 +5,17 @@ import {
   equalTo,
   get,
   orderByChild,
-  push,
   query,
   ref,
+  remove,
   set,
 } from "firebase/database";
-import { getBlob, ref as storageRef, uploadBytes } from "firebase/storage";
+import {
+  deleteObject,
+  getBlob,
+  ref as storageRef,
+  uploadBytes,
+} from "firebase/storage";
 import { database, storage } from "./firebase";
 import { useUserStore } from "./userRepository";
 import { Ground } from "@/domain/ground";
@@ -22,6 +27,7 @@ interface GroundRepository {
   getGroundById: (key: string) => DatabaseReference;
   uploadPhotos: (photos: File[], ground: Ground) => Promise<void>;
   getPhotoBlob: (path: string) => Promise<Blob>;
+  deletePhoto: (photo: Photo) => Promise<void>;
 }
 
 export const useGroundRepository = (): GroundRepository => {
@@ -34,21 +40,24 @@ export const useGroundRepository = (): GroundRepository => {
     if (user === null) throw new Error("user is null");
     const groundsRef = ref(database, "grounds");
     const groundsStorageRef = storageRef(storage, "grounds");
+
     const promises = photos.map(async (photo) => {
-      const photoRef = storageRef(
-        groundsStorageRef,
-        `${ground.key}/${photo.name}`
-      );
+      const id = encodeURI(`${Date.now()}${photo.name}`).replace(/\./g, "");
+      const photoRef = storageRef(groundsStorageRef, `${ground.id}/${id}`);
       const uploadedPhoto = await uploadBytes(photoRef, photo);
       const ref = uploadedPhoto.ref;
+
       const photoDto: Photo = {
+        groundId: ground.id.toString(),
         uid: user.uid,
         userDisplayName: user.displayName,
         userPhotoUrl: user.photoURL,
         src: ref.fullPath,
         thumbnail: ref.fullPath,
+        id: id,
       };
-      push(child(groundsRef, `${ground.key}/photos`), photoDto);
+
+      set(child(groundsRef, `${ground.id}/photos/${id}`), photoDto);
       return uploadedPhoto.ref.fullPath;
     });
     await Promise.all(promises);
@@ -76,6 +85,19 @@ export const useGroundRepository = (): GroundRepository => {
     await set(groundRef, null);
     return;
   };
+  const deletePhoto = async (photo: Photo): Promise<void> => {
+    if (user === null && init) throw new Error("user is null");
+    if (photo.id === undefined) throw new Error("photo.id is undefined");
+    const postRef = ref(database, `grounds/${photo.groundId}`);
+
+    const photoStorageRef = storageRef(
+      storage,
+      `grounds/${photo.groundId}/${photo.id}`
+    );
+    await remove(child(postRef, `photos/${photo.id}`));
+    await deleteObject(photoStorageRef);
+    return;
+  };
   const insertGround = async (title: string): Promise<void> => {
     if (user === null) throw new Error("user is null");
     const countRef = ref(database, "count");
@@ -90,7 +112,7 @@ export const useGroundRepository = (): GroundRepository => {
       userDisplayName: user.displayName,
       userPhotoUrl: user.photoURL,
       createdAt: Date.now(),
-      key: count,
+      id: count,
     };
     set(groundUserRef, ground);
   };
@@ -102,5 +124,6 @@ export const useGroundRepository = (): GroundRepository => {
     getGroundById,
     uploadPhotos,
     getPhotoBlob,
+    deletePhoto,
   };
 };

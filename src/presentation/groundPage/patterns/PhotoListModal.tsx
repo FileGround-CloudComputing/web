@@ -6,6 +6,7 @@ import { PhotoSwiper } from "./PhotoSwiper";
 import FileDownloadRoundedIcon from "@mui/icons-material/FileDownloadRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { Photo } from "@/domain/photo";
+import { DeletePhotoButton } from "@/presentation/commons/patterns/DeleteIconButton";
 interface PhotoListModalProps {
   photos: Photo[];
   modalOpen: number;
@@ -38,6 +39,12 @@ export const PhotoListModal = ({
           gap: 16px;
         `}
       >
+        <DeletePhotoButton photo={photos[idx]} onDelete={handleClose} />
+        <div
+          css={css`
+            flex: 1;
+          `}
+        />
         <IconButton
           shadowSize={2}
           onClick={() => {
