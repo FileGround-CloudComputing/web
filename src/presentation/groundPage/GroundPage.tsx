@@ -61,7 +61,7 @@ export const GroundPage = ({ groundId }: GroundPageProps): ReactElement => {
     return () => {
       off(dbRef);
     };
-  }, [getGroundById, groundId, addSnackbar, getPhotoUrl]);
+  }, [groundId, addSnackbar]);
   if (ground == null) {
     return <></>;
   }

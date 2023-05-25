@@ -3,6 +3,7 @@ import {
   child,
   equalTo,
   get,
+  orderByChild,
   push,
   query,
   ref,
@@ -27,9 +28,6 @@ interface GroundRepository {
 }
 
 export const useGroundRepository = (): GroundRepository => {
-  const groundsRef = ref(database, "grounds");
-  const countRef = ref(database, "count");
-  const groundsStorageRef = storageRef(storage, "grounds");
   const { user, init } = useUserStore();
 
   const uploadPhotos = async (
@@ -37,6 +35,8 @@ export const useGroundRepository = (): GroundRepository => {
     ground: Ground
   ): Promise<void> => {
     if (user === null) throw new Error("user is null");
+    const groundsRef = ref(database, "grounds");
+    const groundsStorageRef = storageRef(storage, "grounds");
     const promises = photos.map(async (photo) => {
       const photoRef = storageRef(
         groundsStorageRef,
@@ -57,27 +57,32 @@ export const useGroundRepository = (): GroundRepository => {
     await Promise.all(promises);
   };
   const getUserGrounds = (): DatabaseReference => {
+    const groundsRef = ref(database, "grounds");
     if (user === null) throw new Error("user is null");
-    return query(groundsRef, equalTo(user.uid)).ref;
+    return query(groundsRef, orderByChild("uid"), equalTo(user.uid)).ref;
   };
 
   const getPhotoUrl = async (path: string): Promise<string> => {
     return await getDownloadURL(storageRef(storage, path));
   };
   const getGroundById = (key: string): DatabaseReference => {
+    const groundsRef = ref(database, "grounds");
     if (user === null && init) throw new Error("user is null");
+
     return child(groundsRef, `${Number.parseInt(key)}`);
   };
 
   const deleteGround = async (key: string): Promise<void> => {
     if (user === null && init) throw new Error("user is null");
+    const groundsRef = ref(database, "grounds");
     const groundRef = child(groundsRef, `${Number.parseInt(key)}`);
     await set(groundRef, null);
     return;
   };
   const insertGround = async (title: string): Promise<void> => {
     if (user === null) throw new Error("user is null");
-
+    const countRef = ref(database, "count");
+    const groundsRef = ref(database, "grounds");
     const count = (await get(countRef)).val() as number;
     set(countRef, count + 1);
     const groundUserRef = child(groundsRef, `${count}`);
