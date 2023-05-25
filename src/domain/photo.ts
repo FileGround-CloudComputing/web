@@ -4,4 +4,5 @@ export interface Photo {
   uid: string;
   userDisplayName: string | null;
   userPhotoUrl: string | null;
+  blob?: Blob;
 }

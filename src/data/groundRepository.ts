@@ -10,11 +10,7 @@ import {
   ref,
   set,
 } from "firebase/database";
-import {
-  getDownloadURL,
-  ref as storageRef,
-  uploadBytes,
-} from "firebase/storage";
+import { getBlob, ref as storageRef, uploadBytes } from "firebase/storage";
 import { database, storage } from "./firebase";
 import { useUserStore } from "./userRepository";
 import { Ground } from "@/domain/ground";
@@ -25,7 +21,7 @@ interface GroundRepository {
   deleteGround: (key: string) => Promise<void>;
   getGroundById: (key: string) => DatabaseReference;
   uploadPhotos: (photos: File[], ground: Ground) => Promise<void>;
-  getPhotoUrl: (path: string) => Promise<string>;
+  getPhotoBlob: (path: string) => Promise<Blob>;
 }
 
 export const useGroundRepository = (): GroundRepository => {
@@ -63,8 +59,8 @@ export const useGroundRepository = (): GroundRepository => {
     return query(groundsRef, orderByChild("uid"), equalTo(user.uid));
   };
 
-  const getPhotoUrl = async (path: string): Promise<string> => {
-    return await getDownloadURL(storageRef(storage, path));
+  const getPhotoBlob = async (path: string): Promise<Blob> => {
+    return await getBlob(storageRef(storage, path));
   };
   const getGroundById = (key: string): DatabaseReference => {
     const groundsRef = ref(database, "grounds");
@@ -105,6 +101,6 @@ export const useGroundRepository = (): GroundRepository => {
     deleteGround,
     getGroundById,
     uploadPhotos,
-    getPhotoUrl,
+    getPhotoBlob,
   };
 };
