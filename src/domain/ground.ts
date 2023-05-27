@@ -8,4 +8,5 @@ export interface Ground {
   userPhotoUrl: string | null;
   id: number;
   createdAt: number;
+  password?: string;
 }

@@ -45,3 +45,8 @@ export const typoStyles3 = css`
   font-size: 1rem;
   font-weight: 400;
 `;
+export const labelStyles = css`
+  ${typoStyles}
+  font-size: 1rem;
+  font-weight: 700;
+`;

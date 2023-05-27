@@ -22,9 +22,9 @@ import { Ground } from "@/domain/ground";
 import { Photo } from "@/domain/photo";
 interface GroundRepository {
   getUserGrounds: () => Query;
-  insertGround: (title: string) => Promise<void>;
-  deleteGround: (key: string) => Promise<void>;
-  getGroundById: (key: string) => DatabaseReference;
+  insertGround: (title: string, password?: string) => Promise<string>;
+  deleteGround: (id: string) => Promise<void>;
+  getGroundById: (id: string, password?: string) => DatabaseReference;
   uploadPhotos: (photos: File[], ground: Ground) => Promise<void>;
   getPhotoBlob: (path: string) => Promise<Blob>;
   deletePhoto: (photo: Photo) => Promise<void>;
@@ -71,17 +71,21 @@ export const useGroundRepository = (): GroundRepository => {
   const getPhotoBlob = async (path: string): Promise<Blob> => {
     return await getBlob(storageRef(storage, path));
   };
-  const getGroundById = (key: string): DatabaseReference => {
-    const groundsRef = ref(database, "grounds");
+  const getGroundById = (id: string, password?: string): DatabaseReference => {
     if (user === null && init) throw new Error("user is null");
-
-    return child(groundsRef, `${Number.parseInt(key)}`);
+    if (password == null) {
+      const groundsRef = ref(database, "grounds");
+      return child(groundsRef, `${Number.parseInt(id)}`);
+    } else {
+      const groundsRef = ref(database, "grounds");
+      return child(groundsRef, `${Number.parseInt(id)}-${password}`);
+    }
   };
 
-  const deleteGround = async (key: string): Promise<void> => {
+  const deleteGround = async (id: string): Promise<void> => {
     if (user === null && init) throw new Error("user is null");
     const groundsRef = ref(database, "grounds");
-    const groundRef = child(groundsRef, `${Number.parseInt(key)}`);
+    const groundRef = child(groundsRef, `${Number.parseInt(id)}`);
     await set(groundRef, null);
     return;
   };
@@ -98,13 +102,16 @@ export const useGroundRepository = (): GroundRepository => {
     await deleteObject(photoStorageRef);
     return;
   };
-  const insertGround = async (title: string): Promise<void> => {
+  const insertGround = async (
+    title: string,
+    password?: string
+  ): Promise<string> => {
     if (user === null) throw new Error("user is null");
     const countRef = ref(database, "count");
     const groundsRef = ref(database, "grounds");
     const count = (await get(countRef)).val() as number;
     set(countRef, count + 1);
-    const groundUserRef = child(groundsRef, `${count}`);
+
     const ground: Ground = {
       title: title,
       photos: [],
@@ -114,7 +121,16 @@ export const useGroundRepository = (): GroundRepository => {
       createdAt: Date.now(),
       id: count,
     };
-    set(groundUserRef, ground);
+    if (password != undefined) {
+      const groundUserRef = child(groundsRef, `${count}-${password}`);
+      ground.password = password;
+      set(groundUserRef, ground);
+      return `${count}/${password}`;
+    } else {
+      const groundUserRef = child(groundsRef, `${count}`);
+      set(groundUserRef, ground);
+      return `${count}`;
+    }
   };
 
   return {

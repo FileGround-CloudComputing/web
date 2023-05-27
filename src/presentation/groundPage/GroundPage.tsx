@@ -15,24 +15,28 @@ import { titleStyles1 } from "../commons/atomics/typo";
 import { Button } from "../commons/components/Button";
 
 export const GroundPageEnter = (): ReactElement => {
-  const { groundId } = useParams();
+  const { groundId, password } = useParams();
   const navigate = useNavigate();
   if (groundId == null) {
     navigate(CONNECT_PATH);
     return <></>;
   }
-  return <GroundPage groundId={groundId} />;
+  return <GroundPage groundId={groundId} password={password} />;
 };
 
 interface GroundPageProps {
   groundId: string;
+  password?: string;
 }
-export const GroundPage = ({ groundId }: GroundPageProps): ReactElement => {
+export const GroundPage = ({
+  groundId,
+  password,
+}: GroundPageProps): ReactElement => {
   const { getGroundById, uploadPhotos, getPhotoBlob } = useGroundRepository();
   const { addSnackbar } = useSnackbarStore();
   const [ground, setGround] = useState<Ground | null>(null);
   useEffect(() => {
-    const dbRef = getGroundById(groundId);
+    const dbRef = getGroundById(groundId, password);
     onValue(dbRef, async (snap) => {
       const val = snap.val();
 

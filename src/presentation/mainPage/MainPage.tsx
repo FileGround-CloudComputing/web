@@ -15,7 +15,7 @@ import { useGroundRepository } from "@/data/groundRepository";
 import { off, onValue } from "firebase/database";
 import { GroundListItem } from "../commons/patterns/GroundList";
 import { Link } from "react-router-dom";
-import { CONNECT_PATH } from "@/domain/paths";
+import { CONNECT_PATH, MAKE_PATH } from "@/domain/paths";
 
 const MainPageGroundsListAccordion = (): ReactElement => {
   const { user } = useUserStore();
@@ -59,12 +59,18 @@ export const MainPage = (): ReactElement => {
       <MainHeader />
 
       <UserInfo />
-
-      <ListButtonWithDesc
-        icon={<WebStoriesIcon />}
-        title={"그라운드 만들기"}
-        description="공유를 시작해보세요!"
-      />
+      <Link
+        to={MAKE_PATH}
+        css={css`
+          width: 100%;
+        `}
+      >
+        <ListButtonWithDesc
+          icon={<WebStoriesIcon />}
+          title={"그라운드 만들기"}
+          description="공유를 시작해보세요!"
+        />
+      </Link>
       <Link
         to={CONNECT_PATH}
         css={css`
