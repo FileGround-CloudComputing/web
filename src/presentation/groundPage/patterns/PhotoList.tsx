@@ -57,6 +57,7 @@ interface PhotoListByUserProps {
 export const PhotoListByUser = ({
   photos,
 }: PhotoListByUserProps): ReactElement => {
+  const [isOpen, setIsOpen] = useState(true);
   const photoRecord: Map<string, Photo[]> = new Map();
   photos.forEach((photo) => {
     if (photoRecord.get(photo.uid) == null) {
@@ -114,10 +115,16 @@ export const PhotoListByUser = ({
                 flex: 1;
               `}
             />
-            <PhotoListMenu photos={photos} />
+            <PhotoListMenu
+              photos={photos}
+              isOpen={isOpen}
+              toggleIsOpen={() => {
+                setIsOpen(!isOpen);
+              }}
+            />
           </div>
 
-          <PhotoList photos={photos} />
+          {isOpen && <PhotoList photos={photos} />}
         </div>
       ))}
     </div>
