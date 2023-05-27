@@ -53,7 +53,6 @@ const MainPageGroundsListAccordion = (): ReactElement => {
   );
 };
 export const MainPage = (): ReactElement => {
-  const { insertGround } = useGroundRepository();
   return (
     <div css={pageStyles}>
       <MainHeader />
@@ -84,13 +83,6 @@ export const MainPage = (): ReactElement => {
         />
       </Link>
       <MainPageGroundsListAccordion />
-      <button
-        onClick={() => {
-          insertGround("test");
-        }}
-      >
-        그라운드 생성하기
-      </button>
     </div>
   );
 };

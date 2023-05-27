@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import { Modal } from "./Modal";
 import { GroundShare } from "./GroundShare";
 import { DeleteGroundIconButton } from "./DeleteIconButton";
+import LockRoundedIcon from "@mui/icons-material/LockRounded";
 interface GroundListItemProps {
   ground: Ground;
 }
@@ -30,7 +31,11 @@ const GroundListItemMenu = ({ ground }: GroundListItemProps): ReactElement => {
             setOpen(false);
           }}
         >
-          <GroundShare url={`${window.location.href}${ground.id}`} />
+          <GroundShare
+            url={`${window.location.href}${ground.id}${
+              ground.password == null ? "" : `/${ground.password}`
+            }`}
+          />
         </Modal>
       )}
       <div
@@ -63,7 +68,11 @@ export const GroundListItem = ({ ground }: GroundListItemProps) => {
       `}
     >
       <Link
-        to={`${ground.id}`}
+        to={
+          ground.password == null
+            ? `${ground.id}`
+            : `${ground.id}/${ground.password}`
+        }
         css={css`
           flex: 1;
         `}
@@ -97,8 +106,13 @@ export const GroundListItem = ({ ground }: GroundListItemProps) => {
               css={(theme) => css`
                 ${titleStyles3}
                 color:${theme.colors.onBackground};
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 8px;
               `}
             >
+              {ground.password != null && <LockRoundedIcon />}
               {ground.title}
             </span>
             <span

@@ -14,7 +14,7 @@ export const BottomSnackbar = ({
   return (
     <div
       css={css`
-        position: absolute;
+        position: fixed;
         bottom: 50px;
         left: calc(50% - 150px);
         width: 300px;

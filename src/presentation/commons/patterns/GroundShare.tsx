@@ -21,6 +21,7 @@ export const GroundShare = ({ url }: GroundQRProps): ReactElement => {
         gap: 16px;
         justify-content: center;
         align-items: center;
+        width: 100%;
       `}
     >
       <QRCode
@@ -44,6 +45,7 @@ export const GroundShare = ({ url }: GroundQRProps): ReactElement => {
           display: flex;
           justify-content: center;
           align-items: center;
+          width: 100%;
         `}
       >
         <span
@@ -53,6 +55,10 @@ export const GroundShare = ({ url }: GroundQRProps): ReactElement => {
             padding-right: 8px;
             margin-right: 8px;
             border-right: 2px solid ${theme.colors.darkenBackground};
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 100%;
           `}
         >
           {url}

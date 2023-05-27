@@ -23,7 +23,7 @@ import { Photo } from "@/domain/photo";
 interface GroundRepository {
   getUserGrounds: () => Query;
   insertGround: (title: string, password?: string) => Promise<string>;
-  deleteGround: (id: string) => Promise<void>;
+  deleteGround: (id: string, password?: string) => Promise<void>;
   getGroundById: (id: string, password?: string) => DatabaseReference;
   uploadPhotos: (photos: File[], ground: Ground) => Promise<void>;
   getPhotoBlob: (path: string) => Promise<Blob>;
@@ -57,7 +57,14 @@ export const useGroundRepository = (): GroundRepository => {
         id: id,
       };
 
-      set(child(groundsRef, `${ground.id}/photos/${id}`), photoDto);
+      if (ground.password != undefined) {
+        set(child(groundsRef, `${ground.id}/photos/${id}`), photoDto);
+      } else {
+        set(
+          child(groundsRef, `${ground.id}-${ground.password}/photos/${id}`),
+          photoDto
+        );
+      }
       return uploadedPhoto.ref.fullPath;
     });
     await Promise.all(promises);
@@ -82,11 +89,16 @@ export const useGroundRepository = (): GroundRepository => {
     }
   };
 
-  const deleteGround = async (id: string): Promise<void> => {
+  const deleteGround = async (id: string, password?: string): Promise<void> => {
     if (user === null && init) throw new Error("user is null");
     const groundsRef = ref(database, "grounds");
-    const groundRef = child(groundsRef, `${Number.parseInt(id)}`);
-    await set(groundRef, null);
+    if (password == null) {
+      const groundRef = child(groundsRef, `${Number.parseInt(id)}`);
+      await set(groundRef, null);
+    } else {
+      const groundRef = child(groundsRef, `${Number.parseInt(id)}-${password}`);
+      await set(groundRef, null);
+    }
     return;
   };
   const deletePhoto = async (photo: Photo): Promise<void> => {
