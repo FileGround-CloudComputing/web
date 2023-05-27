@@ -12,11 +12,13 @@ export const NumPad = ({ handleInput }: NumPadProps): ReactElement => {
       css={css`
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        justify-content: space-between;
-        align-content: space-between;
+        justify-content: center;
+        align-content: center;
         width: 100%;
         aspect-ratio: 1;
         justify-items: center;
+        row-gap: 16px;
+        column-gap: 16px;
       `}
     >
       {[...Array(9)].map((_, i) => {

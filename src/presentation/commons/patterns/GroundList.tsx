@@ -39,9 +39,6 @@ const GroundListItemMenu = ({ ground }: GroundListItemProps): ReactElement => {
           flex-direction: row;
           justify-content: end;
           gap: 4px;
-          background-color: ${theme.colors.darkenBackground};
-          border-radius: 16px;
-          padding: 6px;
         `}
       >
         <IconButton

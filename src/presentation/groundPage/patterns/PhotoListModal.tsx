@@ -27,7 +27,6 @@ export const PhotoListModal = ({
       css={css`
         width: 90%;
         max-width: 50vh;
-        aspect-ratio: 1;
       `}
     >
       <div

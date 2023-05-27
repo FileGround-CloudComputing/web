@@ -77,7 +77,7 @@ export const GroundPage = ({ groundId }: GroundPageProps): ReactElement => {
             color: ${theme.colors.onBackground};
           `}
         >
-          {ground.title}
+          {ground.userDisplayName}의 {ground.title}
         </span>
         {ground.photos != null && <PhotoListByUser photos={ground.photos} />}
         <Button

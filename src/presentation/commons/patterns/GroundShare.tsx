@@ -19,6 +19,8 @@ export const GroundShare = ({ url }: GroundQRProps): ReactElement => {
         display: flex;
         flex-direction: column;
         gap: 16px;
+        justify-content: center;
+        align-items: center;
       `}
     >
       <QRCode
