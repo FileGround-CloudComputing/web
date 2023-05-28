@@ -58,6 +58,7 @@ export const GroundShare = ({ url }: GroundQRProps): ReactElement => {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            text-align: center;
             width: 100%;
           `}
         >

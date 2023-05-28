@@ -6,7 +6,8 @@ import { ReactElement, useState } from "react";
 import { PhotoListMenu } from "./PhotoListMenu";
 import { PhotoListModal } from "./PhotoListModal";
 import { Ground } from "@/domain/ground";
-
+import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
+import { labelStyles } from "@/presentation/commons/atomics/typo";
 export const PhotoList = ({
   photos,
   ground,
@@ -35,23 +36,66 @@ export const PhotoList = ({
           column-gap: 8px;
         `}
       >
-        {photos.map((photo, idx) => (
-          <Img
-            src={photo.blob == null ? "" : URL.createObjectURL(photo.blob)}
-            css={(theme) => css`
-              width: 100%;
-              object-fit: cover;
-              aspect-ratio: 1;
-              border-radius: 8px;
-              cursor: pointer;
-              ${normalShapeStyles({ theme, size: 2 })}
-            `}
-            onClick={() => {
-              setModalOpen(idx);
-            }}
-            key={photo.src}
-          />
-        ))}
+        {photos
+          .sort((a, b) => {
+            return a.likes.size > b.likes.size ? -1 : 1;
+          })
+          .map((photo, idx) => (
+            <span
+              css={css`
+                position: relative;
+              `}
+            >
+              <Img
+                src={photo.blob == null ? "" : URL.createObjectURL(photo.blob)}
+                css={(theme) => css`
+                  width: 100%;
+                  object-fit: cover;
+                  aspect-ratio: 1;
+                  border-radius: 8px;
+                  cursor: pointer;
+                  ${normalShapeStyles({ theme, size: 2 })}
+                `}
+                onClick={() => {
+                  setModalOpen(idx);
+                }}
+                key={photo.src}
+              />
+              <div
+                css={css`
+                  position: absolute;
+                  top: 4px;
+                  right: 4px;
+                `}
+              >
+                <FavoriteRoundedIcon
+                  css={(theme) => css`
+                    position: absolute;
+                    top: 0px;
+                    right: 0px;
+                    color: ${theme.colors.background};
+                  `}
+                />
+                <span
+                  css={css`
+                    position: absolute;
+                    top: 0px;
+                    right: 0px;
+                    width: 24px;
+                    height: 24px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    color: #ed4141;
+                    z-index: 2;
+                    ${labelStyles}
+                  `}
+                >
+                  {photo.likes.size}
+                </span>
+              </div>
+            </span>
+          ))}
       </div>
     </>
   );
