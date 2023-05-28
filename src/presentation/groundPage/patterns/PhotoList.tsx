@@ -5,8 +5,12 @@ import { css } from "@emotion/react";
 import { ReactElement, useState } from "react";
 import { PhotoListMenu } from "./PhotoListMenu";
 import { PhotoListModal } from "./PhotoListModal";
+import { Ground } from "@/domain/ground";
 
-export const PhotoList = ({ photos }: PhotoListByUserProps): ReactElement => {
+export const PhotoList = ({
+  photos,
+  ground,
+}: PhotoListByUserProps): ReactElement => {
   const [modalOpen, setModalOpen] = useState(-1);
   const [idx, setIdx] = useState(0);
   const handleClose = () => setModalOpen(-1);
@@ -19,6 +23,7 @@ export const PhotoList = ({ photos }: PhotoListByUserProps): ReactElement => {
           setIdx={setIdx}
           photos={photos}
           modalOpen={modalOpen}
+          ground={ground}
         />
       )}
       <div
@@ -53,9 +58,11 @@ export const PhotoList = ({ photos }: PhotoListByUserProps): ReactElement => {
 };
 interface PhotoListByUserProps {
   photos: Photo[];
+  ground: Ground;
 }
 export const PhotoListByUser = ({
   photos,
+  ground,
 }: PhotoListByUserProps): ReactElement => {
   const [isOpen, setIsOpen] = useState(true);
   const photoRecord: Map<string, Photo[]> = new Map();
@@ -124,7 +131,7 @@ export const PhotoListByUser = ({
             />
           </div>
 
-          {isOpen && <PhotoList photos={photos} />}
+          {isOpen && <PhotoList photos={photos} ground={ground} />}
         </div>
       ))}
     </div>

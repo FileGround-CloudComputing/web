@@ -125,7 +125,6 @@ export const ConnectPage = (): ReactElement => {
           pageStyles,
           css`
             flex: 1;
-            justify-content: center;
           `,
         ]}
       >

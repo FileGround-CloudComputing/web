@@ -7,4 +7,5 @@ export interface Photo {
   userPhotoUrl: string | null;
   blob?: Blob;
   groundId: string;
+  likes: Map<string, boolean>;
 }

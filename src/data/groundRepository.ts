@@ -28,6 +28,8 @@ interface GroundRepository {
   uploadPhotos: (photos: File[], ground: Ground) => Promise<void>;
   getPhotoBlob: (path: string) => Promise<Blob>;
   deletePhoto: (photo: Photo) => Promise<void>;
+  likePhoto: (ground: Ground, photo: Photo) => Promise<void>;
+  unlikePhoto: (ground: Ground, photo: Photo) => Promise<void>;
 }
 
 export const useGroundRepository = (): GroundRepository => {
@@ -55,9 +57,10 @@ export const useGroundRepository = (): GroundRepository => {
         src: ref.fullPath,
         thumbnail: ref.fullPath,
         id: id,
+        likes: new Map<string, boolean>(),
       };
 
-      if (ground.password != undefined) {
+      if (ground.password == undefined) {
         set(child(groundsRef, `${ground.id}/photos/${id}`), photoDto);
       } else {
         set(
@@ -114,6 +117,18 @@ export const useGroundRepository = (): GroundRepository => {
     await deleteObject(photoStorageRef);
     return;
   };
+  const likePhoto = async (ground: Ground, photo: Photo): Promise<void> => {
+    if (user === null) throw new Error("user is null");
+
+    const groundRef = getGroundById(ground.id.toString(), ground.password);
+    await set(child(groundRef, `photos/${photo.id}/likes/${user.uid}`), true);
+  };
+  const unlikePhoto = async (ground: Ground, photo: Photo): Promise<void> => {
+    if (user === null) throw new Error("user is null");
+
+    const groundRef = getGroundById(ground.id.toString(), ground.password);
+    await set(child(groundRef, `photos/${photo.id}/likes/${user.uid}`), null);
+  };
   const insertGround = async (
     title: string,
     password?: string
@@ -153,5 +168,7 @@ export const useGroundRepository = (): GroundRepository => {
     uploadPhotos,
     getPhotoBlob,
     deletePhoto,
+    likePhoto,
+    unlikePhoto,
   };
 };

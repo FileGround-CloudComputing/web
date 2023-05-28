@@ -53,6 +53,10 @@ export const GroundPage = ({
           const blob = await getPhotoBlob(photo.src);
           return {
             ...photo,
+            likes:
+              photo.likes != null
+                ? new Map<string, boolean>(Object.entries(photo.likes))
+                : new Map<string, boolean>(),
             blob: blob,
           };
         })
@@ -83,7 +87,9 @@ export const GroundPage = ({
         >
           {ground.userDisplayName}의 {ground.title}
         </span>
-        {ground.photos != null && <PhotoListByUser photos={ground.photos} />}
+        {ground.photos != null && (
+          <PhotoListByUser photos={ground.photos} ground={ground} />
+        )}
         <Button
           onClick={() => {
             ref.current?.click();
@@ -97,7 +103,13 @@ export const GroundPage = ({
           multiple
           onChange={(e) => {
             if (e.currentTarget.files == null) return;
-            uploadPhotos([...e.currentTarget.files], ground);
+            uploadPhotos([...e.currentTarget.files], ground)
+              .then(() => {
+                addSnackbar({ message: "업로드 완료", type: "success" });
+              })
+              .catch(() => {
+                addSnackbar({ message: "업로드 실패", type: "error" });
+              });
           }}
           ref={ref}
           hidden
