@@ -39,7 +39,7 @@ const GroundListItemMenu = ({ ground }: GroundListItemProps): ReactElement => {
         </Modal>
       )}
       <div
-        css={(theme) => css`
+        css={css`
           display: flex;
           flex-direction: row;
           justify-content: end;

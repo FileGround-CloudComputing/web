@@ -23,7 +23,11 @@ export const GroundMenu = ({ ground }: GroundMenuProps): ReactElement => {
             setOpen(false);
           }}
         >
-          <GroundShare url={`${window.location.origin}/${ground.id}`} />
+          <GroundShare
+            url={`${window.location.origin}/${ground.id}${
+              ground.password == null ? "" : `/${ground.password}`
+            }`}
+          />
         </Modal>
       )}
       <PopOver>
