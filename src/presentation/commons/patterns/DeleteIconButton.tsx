@@ -17,7 +17,7 @@ export const DeleteGroundIconButton = ({
     <IconButton
       onClick={() => {
         if (confirm("정말로 삭제하시겠습니까?")) {
-          deleteGround(ground.id.toString())
+          deleteGround(ground.id.toString(), ground.password?.toString())
             .then(() => {
               addSnackbar({
                 message: "성공적으로 삭제했습니다.",
