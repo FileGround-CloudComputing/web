@@ -25,11 +25,21 @@ jobs:
     - name: Install npm packages
       run: |
         npm install
-
+    - name: Generate Environment Variables File for Production
+      run: |
+        touch .env.production
+        echo "VITE_FB_API_KEY=${{ secrets.VITE_FB_API_KEY }}" >> .env.production
+        echo "VITE_FB_AUTH_DOMAIN=${{ secrets.VITE_FB_AUTH_DOMAIN }}" >> .env.production
+        echo "VITE_FB_DATABASE_URL=${{ secrets.VITE_FB_DATABASE_URL }}" >> .env.production
+        echo "VITE_FB_PROJECT_ID=${{ secrets.VITE_FB_PROJECT_ID }}" >> .env.production
+        echo "VITE_FB_STORAGE_BUCKET=${{ secrets.VITE_FB_STORAGE_BUCKET }}" >> .env.production
+        echo "VITE_FB_MESSAGING_SENDER_ID=${{ secrets.VITE_FB_MESSAGING_SENDER_ID }}" >> .env.production
+        echo "VITE_FB_APP_ID=${{ secrets.VITE_FB_APP_ID }}" >> .env.production
+        echo "VITE_FB_MESEAUREMENT_ID=${{ secrets.VITE_FB_MESEAUREMENT_ID }}" >> .env.production
     - name: Bulid web
       run: |
         npm run build
-
+        
     # Deploying the functions to firebase
     - name:  Deploy to Firebase
       uses: w9jds/firebase-action@master
