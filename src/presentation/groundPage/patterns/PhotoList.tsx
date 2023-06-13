@@ -87,7 +87,7 @@ export const PhotoList = ({
                     justify-content: center;
                     align-items: center;
                     color: #ed4141;
-                    z-index: 2;
+                    z-index: 1;
                     ${labelStyles}
                   `}
                 >
